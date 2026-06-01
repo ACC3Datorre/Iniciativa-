@@ -1483,3 +1483,270 @@ body[data-modo="facilitador"] .modo-indicator { display: inline-block; }
   .tree-content-area { margin-left: 90px; }
   .tree-level-tag { font-size: 11px; padding-right: 10px; }
 }
+
+/* ============================================================
+   CRONÓMETRO — sticky, grande, visible
+   ============================================================ */
+.timer-bar {
+  position: sticky;
+  top: 56px; /* después del nav */
+  z-index: 90;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 14px 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--ink);
+}
+.timer-bar.urgent {
+  background: var(--accent);
+  animation: timerPulse 1.5s ease-in-out infinite;
+}
+.timer-bar.expired {
+  background: #2A1010;
+  color: #C97676;
+}
+@keyframes timerPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(91, 44, 143, 0.6); }
+  50%      { box-shadow: 0 0 0 6px rgba(91, 44, 143, 0); }
+}
+
+.timer-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-right: auto;
+}
+.timer-display {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+.timer-display .sep {
+  opacity: 0.5;
+  margin: 0 2px;
+}
+.timer-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+.timer-action {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  padding: 7px 14px;
+  border-radius: 2px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: var(--paper);
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: all 0.15s;
+}
+.timer-action:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.4);
+}
+.timer-action.start {
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 500;
+}
+.timer-action.start:hover { background: rgba(255,255,255,0.85); }
+
+.timer-penalty-flash {
+  position: fixed;
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: var(--paper);
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  animation: penaltyFlash 1.8s ease-out;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+@keyframes penaltyFlash {
+  0%   { opacity: 0; transform: translate(-50%, -10px); }
+  20%  { opacity: 1; transform: translate(-50%, 0); }
+  80%  { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, -8px); }
+}
+
+/* Estado "tiempo agotado" — bloquear interacciones */
+body.time-expired .sobre.closed { cursor: not-allowed; opacity: 0.5; }
+body.time-expired .sobre.closed:hover { transform: none; background-color: var(--surface-warm); }
+body.time-expired .tree-add-floating,
+body.time-expired .tree-node-visual { pointer-events: none; opacity: 0.6; }
+
+.time-expired-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 24, 21, 0.75);
+  backdrop-filter: blur(3px);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+}
+body.time-expired .time-expired-overlay { display: flex; }
+.time-expired-card {
+  background: var(--paper);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 2.5rem 3rem;
+  max-width: 440px;
+  text-align: center;
+}
+.time-expired-card .title {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.time-expired-card p {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   SOBRES CON 5 COLORES DISTINTOS
+   ============================================================ */
+.sobre.s1 { border-left: 3px solid var(--accent); }
+.sobre.s1 .sobre-label { color: var(--accent); }
+.sobre.s2 { border-left: 3px solid #2C7A4A; }
+.sobre.s2 .sobre-label { color: #2C7A4A; }
+.sobre.s3 { border-left: 3px solid #C25A3D; }
+.sobre.s3 .sobre-label { color: #C25A3D; }
+.sobre.s4 { border-left: 3px solid #B8842C; }
+.sobre.s4 .sobre-label { color: #B8842C; }
+.sobre.s5 { border-left: 3px solid #B83A6F; }
+.sobre.s5 .sobre-label { color: #B83A6F; }
+
+/* Estado cerrado del sobre con color matching */
+.sobre.s1.closed { background-color: rgba(91, 44, 143, 0.05); }
+.sobre.s2.closed { background-color: rgba(44, 122, 74, 0.05); }
+.sobre.s3.closed { background-color: rgba(194, 90, 61, 0.05); }
+.sobre.s4.closed { background-color: rgba(184, 132, 44, 0.05); }
+.sobre.s5.closed { background-color: rgba(184, 58, 111, 0.05); }
+
+.sobre-cost {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  margin-left: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--surface-warm);
+  color: var(--muted);
+}
+.sobre-cost.free {
+  background: rgba(44, 122, 74, 0.12);
+  color: #2C7A4A;
+  border: 1px solid rgba(44, 122, 74, 0.25);
+}
+.sobre-cost.cost {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+}
+
+/* ============================================================
+   IDENTIDAD DE EQUIPO (sutil, sin alarmas)
+   ============================================================ */
+.team-banner {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px 18px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--sans);
+}
+.team-badge {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--accent);
+  padding: 4px 16px;
+  border-radius: 2px;
+  background: var(--accent-soft);
+}
+.team-text {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+/* ============================================================
+   HERO SOFT SKILLS — las 4 capacidades destacadas
+   ============================================================ */
+.softskills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 2rem 0;
+}
+.softskill-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  transition: all 0.2s;
+}
+.softskill-card:hover {
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+.softskill-icon {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--accent);
+  margin-bottom: 4px;
+  line-height: 1;
+}
+.softskill-name {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+.softskill-sub {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 6px;
+}
+
+@media (max-width: 760px) {
+  .softskills-grid { grid-template-columns: repeat(2, 1fr); }
+  .timer-bar { padding: 10px 1.25rem; }
+  .timer-display { font-size: 32px; }
+}
