@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NovaMed · Caso de Problem Solving</title>
-<meta name="description" content="Caso de problem solving: el sistema que funciona bien.">
+<title>NovaMed · Trabajo bajo presión</title>
+<meta name="description" content="Caso de problem solving para entrenar trabajo en equipo, manejo del tiempo, decisión bajo presión y coordinación interdisciplinaria.">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body data-brazo="none" data-modo="participante">
+<body data-modo="participante">
 
 <nav>
   <div class="nav-logo">
@@ -16,246 +16,84 @@
     <span class="meta">Caso · Problem Solving</span>
   </div>
   <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showSection('diseno')" id="tab-diseno">
-      <span class="num">01</span> Diseño
-    </button>
-    <button class="nav-tab" onclick="showSection('asignacion')" id="tab-asignacion">
-      <span class="num">02</span> Asignación
-    </button>
-    <button class="nav-tab" onclick="showSection('caso')" id="tab-caso">
-      <span class="num">03</span> Caso
+    <button class="nav-tab active" onclick="showSection('caso')" id="tab-caso">
+      <span class="num">01</span> Caso
     </button>
     <button class="nav-tab" onclick="showSection('sobres')" id="tab-sobres">
-      <span class="num">04</span> Sobres
+      <span class="num">02</span> Sobres
     </button>
     <button class="nav-tab" onclick="showSection('arbol')" id="tab-arbol">
-      <span class="num">05</span> Árbol
+      <span class="num">03</span> Árbol
     </button>
-    <button class="nav-tab" onclick="showSection('evaluacion')" id="tab-evaluacion">
-      <span class="num">06</span> Evaluación
+    <button class="nav-tab only-facilitador" onclick="showSection('evaluacion')" id="tab-evaluacion">
+      <span class="num">04</span> Notas
     </button>
-    <span class="brazo-badge none" id="brazo-badge">SIN ASIGNAR</span>
     <span class="modo-indicator">Facilitador</span>
   </div>
 </nav>
 
 <!-- ============================================================
-     SECCIÓN 01 — DISEÑO
+     CRONÓMETRO
      ============================================================ -->
-<section id="diseno" class="active">
-  <span class="editorial-marker accent"><span class="dash">—</span>01 · Diseño del experimento</span>
+<div class="timer-bar" id="timer-bar">
+  <span class="timer-label">Tiempo restante</span>
+  <div class="timer-display" id="timer-display">
+    <span id="timer-min">45</span><span class="sep">:</span><span id="timer-sec">00</span>
+  </div>
+  <div class="timer-actions">
+    <button class="timer-action start" id="timer-start-btn" onclick="startTimer()">Iniciar</button>
+    <button class="timer-action only-facilitador" onclick="addMinutes(5)">+5 min</button>
+    <button class="timer-action only-facilitador" onclick="resetTimer()">Reset</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECCIÓN 03 — CASO BASE
+     ============================================================ -->
+<section id="caso" class="active">
+  <span class="editorial-marker accent"><span class="dash">—</span>El caso</span>
 
   <div class="hero">
-    <h1 class="display">¿Qué tipo de <em>evidencia</em> produce mejor <em>diagnóstico</em> bajo presión?</h1>
-    <p class="lead">Un experimento de dos brazos sobre el caso NovaMed. Asignación aleatoria. Mismo caso, mismo tiempo, mismo LLM. Lo único que cambia es el tipo de información que el equipo recibe en sus sobres.</p>
+    <h2 class="display">NovaMed:<br>el sistema que <em>"funciona bien"</em>.</h2>
+    <p class="lead">Un caso real de diagnóstico bajo presión. 45 minutos, información incompleta, decisión necesaria para el viernes. Lo que se entrena: <em>trabajo en equipo</em>, <em>manejo del tiempo</em>, <em>actuar bajo presión</em> y <em>coordinación interdisciplinaria</em>.</p>
     <div class="meta-row">
-      <span class="meta-chip">2 brazos paralelos</span>
-      <span class="meta-chip">Asignación aleatoria</span>
+      <span class="meta-chip">Sector: salud</span>
       <span class="meta-chip">45 minutos</span>
-      <span class="meta-chip">N por brazo: 15–20</span>
+      <span class="meta-chip">Equipos de 3–4</span>
+      <span class="meta-chip">Entregable: árbol + presentación</span>
     </div>
   </div>
 
-  <span class="editorial-marker"><span class="dash">—</span>Cómo funciona</span>
+  <div id="team-banner-placeholder"></div>
 
-  <div class="card ghost">
-    <div class="card-body">
-      <p><strong>1.</strong> Cada equipo se asigna aleatoriamente al brazo A (cuantitativo) o B (cualitativo).</p>
-      <p><strong>2.</strong> Todos reciben el mismo caso base: NovaMed.</p>
-      <p><strong>3.</strong> Los sobres tienen los mismos hechos, presentados de manera distinta: A en tablas y métricas, B en citas y entrevistas.</p>
-      <p><strong>4.</strong> Construyen el árbol de problema y entregan tres recomendaciones al CFO.</p>
-      <p><strong>5.</strong> Se evalúan los árboles ciego al brazo. Se comparan los dos grupos.</p>
+  <span class="editorial-marker"><span class="dash">—</span>Lo que vamos a entrenar</span>
+
+  <div class="softskills-grid">
+    <div class="softskill-card">
+      <div class="softskill-icon">⌾</div>
+      <div class="softskill-name">Trabajo en <em style="font-style:italic;color:var(--accent);">equipo</em></div>
+      <div class="softskill-sub">Coordinación interna</div>
     </div>
-  </div>
-
-  <span class="editorial-marker"><span class="dash">—</span>Hipótesis</span>
-
-  <div class="hypothesis">
-    <div class="hypothesis-label">Predicción cruzada</div>
-    <div class="hypothesis-text">
-      El énfasis en datos <em>cuantitativos</em> producirá árboles con mejor <em>estructura</em> de causa raíz. El énfasis en información <em>cualitativa</em> producirá recomendaciones más <em>claras</em> para el decisor. Ambos enfoques son útiles, pero para dimensiones distintas del problema.
+    <div class="softskill-card">
+      <div class="softskill-icon">⏱</div>
+      <div class="softskill-name">Manejo del <em style="font-style:italic;color:var(--accent);">tiempo</em></div>
+      <div class="softskill-sub">Priorización con costo</div>
+    </div>
+    <div class="softskill-card">
+      <div class="softskill-icon">▲</div>
+      <div class="softskill-name">Actuar bajo <em style="font-style:italic;color:var(--accent);">presión</em></div>
+      <div class="softskill-sub">Tolerancia a la ambigüedad</div>
+    </div>
+    <div class="softskill-card">
+      <div class="softskill-icon">⌬</div>
+      <div class="softskill-name">Mirada <em style="font-style:italic;color:var(--accent);">interdisciplinaria</em></div>
+      <div class="softskill-sub">Integrar perspectivas</div>
     </div>
   </div>
 
   <div class="banner info">
     <span class="banner-icon">i</span>
-    <div>Esta hipótesis es <strong>direccional cruzada</strong>: no predice que un brazo gane en todo, sino que cada uno gana en una dimensión distinta. Es más informativa que <em>"uno es mejor que el otro"</em> porque te dice cómo combinar los dos enfoques en el training final.</div>
-  </div>
-
-  <span class="editorial-marker"><span class="dash">—</span>Los dos brazos</span>
-
-  <div class="arm-comparison">
-    <div class="arm-card A">
-      <span class="arm-letter">A</span>
-      <div class="arm-label">Brazo A · Cuanti</div>
-      <div class="arm-name">Énfasis en <em style="font-style:italic; color:var(--brazo-A);">evidencia numérica</em></div>
-      <div class="arm-desc">El equipo recibe los sobres con información sesgada hacia métricas, ratios, tickets, tiempos y tasas. Las voces de stakeholders aparecen como datos agregados.</div>
-      <ul class="arm-list">
-        <li>Métricas de uso y rendimiento</li>
-        <li>Distribución estadística de turnos</li>
-        <li>Tickets por categoría</li>
-        <li>Análisis costo-beneficio</li>
-      </ul>
-    </div>
-    <div class="arm-card B">
-      <span class="arm-letter">B</span>
-      <div class="arm-label">Brazo B · Cuali</div>
-      <div class="arm-name">Énfasis en <em style="font-style:italic; color:var(--brazo-B);">evidencia narrativa</em></div>
-      <div class="arm-desc">El equipo recibe los sobres con información sesgada hacia testimonios, citas literales, observaciones de campo y contexto histórico del proyecto.</div>
-      <ul class="arm-list">
-        <li>Citas literales de IT, Ops, médicos</li>
-        <li>Observaciones de campo</li>
-        <li>Historia interna del proyecto</li>
-        <li>Anécdotas de uso</li>
-      </ul>
-    </div>
-  </div>
-
-  <span class="editorial-marker"><span class="dash">—</span>Variables y controles</span>
-
-  <div class="grid2">
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon">Y</div>
-        <div>
-          <div class="card-title">Variables medidas</div>
-          <div class="card-sub">Aplicadas a cada árbol producido</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <p><strong>Y1 · Estructura del árbol</strong>: ¿llega a causa raíz o se queda en síntomas? (rúbrica 1–3)</p>
-        <p><strong>Y2 · Gestión de información</strong>: ¿cuándo cerró el diagnóstico? ¿usó los tres sobres con justificación?</p>
-        <p><strong>Y3 · Claridad al decisor</strong>: ¿el CFO entiende qué hacer leyéndolo en 30 segundos? (rúbrica 1–3)</p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon">C</div>
-        <div>
-          <div class="card-title">Variables controladas</div>
-          <div class="card-sub">Lo que mantenemos idéntico entre brazos</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <p><strong>Mismo caso base</strong> (NovaMed) y mismo tiempo (45 min).</p>
-        <p><strong>Mismo facilitador</strong> rotando, o varios entrenados con el mismo guion.</p>
-        <p><strong>Mismo LLM</strong>: Claude (claude.ai). Elimina la variabilidad por modelo de IA.</p>
-        <p><strong>Mismos equipos de 3–4 personas</strong>, formados por asignación aleatoria estratificada.</p>
-      </div>
-      </div>
-    </div>
-  </div>
-
-  <span class="editorial-marker"><span class="dash">—</span>Tamaño muestral</span>
-
-  <div class="card ghost">
-    <div class="card-body">
-      <p>Para detectar una diferencia moderada entre brazos en una variable rubricada de 1 a 3, necesitás aproximadamente <strong>15–20 equipos por brazo</strong>. Como la unidad de análisis es el equipo (no la persona), si cada uno tiene 3–4 personas, eso implica <strong>45–80 participantes por brazo</strong>, o entre <strong>90 y 160 en total</strong>.</p>
-      <p>Con menos de 15 equipos por brazo el experimento sigue siendo válido, pero solo vas a detectar diferencias grandes. Efectos chicos pasarán desapercibidos. Documentarlo como limitación.</p>
-    </div>
-  </div>
-
-  <span class="editorial-marker"><span class="dash">—</span>Amenazas al diseño</span>
-
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon">!</div>
-      <div>
-        <div class="card-title">Contaminación entre brazos</div>
-        <div class="card-sub">Participantes de A le cuentan a participantes de B</div>
-      </div>
-    </div>
-    <div class="card-body">
-      <p><strong>Mitigación:</strong> Salas separadas, no compartir materiales hasta después de entregar el árbol. Comunicar antes del experimento que la integridad depende de no anticipar contenido.</p>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon">!</div>
-      <div>
-        <div class="card-title">Efecto facilitador</div>
-        <div class="card-sub">Distintos facilitadores producen distinta calidad de output</div>
-      </div>
-    </div>
-    <div class="card-body">
-      <p><strong>Mitigación:</strong> Rotar facilitadores entre brazos, o usar el mismo en horarios distintos. Si no es posible, registrar facilitador como covariable y controlarlo en el análisis.</p>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon">!</div>
-      <div>
-        <div class="card-title">Sesgo del evaluador</div>
-        <div class="card-sub">Quien puntúa los árboles sabe a qué brazo pertenecen</div>
-      </div>
-    </div>
-    <div class="card-body">
-      <p><strong>Mitigación:</strong> Evaluación ciega. Los árboles se entregan al evaluador sin etiqueta de brazo. Idealmente dos evaluadores independientes y calcular acuerdo entre ellos (Cohen's kappa).</p>
-    </div>
-  </div>
-
-  <div class="btn-row">
-    <button class="btn primary" onclick="showSection('asignacion')">Continuar a asignación →</button>
-  </div>
-</section>
-
-<!-- ============================================================
-     SECCIÓN 02 — ASIGNACIÓN
-     ============================================================ -->
-<section id="asignacion">
-  <span class="editorial-marker accent"><span class="dash">—</span>02 · Asignación al brazo</span>
-
-  <div class="hero">
-    <h2 class="display">El azar <em>decide</em> qué evidencia recibís.</h2>
-    <p class="lead">Cada equipo se asigna aleatoriamente al brazo cuantitativo o cualitativo. Una vez asignado, no se cambia hasta el final del experimento.</p>
-  </div>
-
-  <div class="assignment-box">
-    <div class="editorial-marker" style="margin-bottom:8px;">tu asignación actual</div>
-    <div class="assignment-result" id="assign-display">—</div>
-    <div class="assignment-detail" id="assign-detail">Hacé click en el botón para que el sistema te asigne aleatoriamente al brazo cuantitativo (A) o cualitativo (B). La asignación se guarda en tu navegador.</div>
-    <div class="btn-row" style="justify-content:center; margin-top: 1.75rem;">
-      <button class="btn primary" onclick="randomAssign()">Asignarme aleatoriamente →</button>
-      <button class="btn ghost" onclick="setBrazo('facilitador')">Soy facilitador</button>
-      <button class="btn ghost tiny" onclick="resetBrazo()">Reset</button>
-    </div>
-  </div>
-
-  <span class="editorial-marker"><span class="dash">—</span>Para una corrida real del experimento</span>
-
-  <div class="card ghost">
-    <div class="card-body">
-      <p>En una corrida real, la asignación no se hace acá. Antes de la sesión:</p>
-      <p><strong>1.</strong> Listá a todos los participantes con su <em>seniority</em> (junior / semi-senior / senior) y <em>área</em> (negocio / tech / operaciones).</p>
-      <p><strong>2.</strong> Dentro de cada estrato (combinación de seniority y área), asignalos aleatoriamente mitad a A, mitad a B. Esto garantiza balance demográfico entre brazos.</p>
-      <p><strong>3.</strong> Formá equipos de 3–4 personas <strong>dentro del mismo brazo</strong>. Cada equipo es la unidad de análisis. No mezcles brazos en un mismo equipo.</p>
-      <p><strong>4.</strong> En el día del experimento, comunicale a cada equipo su brazo y el link de esta página configurado para mostrar solo su contenido.</p>
-    </div>
-  </div>
-
-  <div class="banner warn">
-    <span class="banner-icon">!</span>
-    <div>El botón <em>"Asignarme aleatoriamente"</em> de esta página es para que un equipo solo entre rápido a la herramienta. La asignación real, controlada y estratificada, la hace el facilitador antes de la sesión y debe estar documentada en una tabla de asignaciones para el análisis posterior.</div>
-  </div>
-</section>
-
-<!-- ============================================================
-     SECCIÓN 03 — CASO BASE
-     ============================================================ -->
-<section id="caso">
-  <span class="editorial-marker accent"><span class="dash">—</span>03 · El caso base</span>
-
-  <div class="hero">
-    <h2 class="display">NovaMed:<br>el sistema que <em>"funciona bien"</em>.</h2>
-    <p class="lead">Una clínica lanzó un sistema de turnos online hace 3 meses. IT dice que anda perfecto. Operaciones dice que es un caos. El CFO necesita una respuesta la semana que viene.</p>
-    <div class="meta-row">
-      <span class="meta-chip">Sector: salud</span>
-      <span class="meta-chip">45 minutos</span>
-      <span class="meta-chip">Equipos de 3–4</span>
-      <span class="meta-chip">Entregable: árbol de problema</span>
-    </div>
+    <div>La IA resuelve problemas individuales. <strong>Lo que pierde la gente con la IA es el músculo de trabajar con otros bajo presión.</strong> Este caso busca recuperarlo.</div>
   </div>
 
   <span class="editorial-marker"><span class="dash">—</span>La situación</span>
@@ -389,95 +227,107 @@
 
   <div class="banner info">
     <span class="banner-icon">→</span>
-    <div>Ahora avanzá a la sección <strong>Sobres</strong>. Vas a ver solo los sobres correspondientes a tu brazo asignado.</div>
+    <div>Ahora avanzá a la sección <strong>Sobres</strong>. Decidan en equipo qué sobres abrir, considerando el costo en tiempo.</div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECCIÓN 04 — SOBRES (por brazo)
+     SECCIÓN — SOBRES (5 sobres, mismo contenido para todos)
      ============================================================ -->
 <section id="sobres">
-  <span class="editorial-marker accent"><span class="dash">—</span>04 · Los tres sobres</span>
+  <span class="editorial-marker accent"><span class="dash">—</span>Los cinco sobres</span>
 
   <div class="hero">
-    <h2 class="display">La información se entrega <em>por capas</em>.</h2>
-    <p class="lead">El Sobre 1 es el punto de partida. El Sobre 2 lo decide el equipo. El Sobre 3 tiene un costo de 2 minutos. Los hechos son los mismos en ambos brazos: lo que cambia es el <em>formato</em> de la evidencia.</p>
+    <h2 class="display">Información <em>fragmentada</em>. Tiempo <em>limitado</em>.</h2>
+    <p class="lead">Cinco sobres con información complementaria sobre el caso. <strong>El primero es gratis.</strong> Cada sobre adicional cuesta <strong>2:30 minutos</strong> del cronómetro. Decidan en equipo cuáles abrir y cuáles dejar cerrados.</p>
   </div>
 
-  <div class="banner warn" id="no-brazo-banner" style="display:none;">
+  <div class="banner accent">
     <span class="banner-icon">!</span>
-    <div>No tenés asignado un brazo todavía. Andá a <a href="#" onclick="showSection('asignacion');return false;">Asignación</a> para que el sistema te asigne, o seleccioná <em>"Soy facilitador"</em> para ver ambos brazos.</div>
+    <div><strong>Reglas:</strong> el Sobre 1 lo abren al iniciar el cronómetro, sin costo. A partir del Sobre 2, cada apertura <em>descuenta 2:30 minutos</em> del tiempo total. No pueden volver a cerrarse — una vez abierto, queda abierto. Si abren los 5, pierden 10 minutos de los 45.</div>
   </div>
 
-  <!-- ====================== BRAZO A — CUANTI ====================== -->
-  <div class="brazo-only-A">
-    <div class="banner accent">
-      <span class="banner-icon">A</span>
-      <div>
-        <span class="only-facilitador"><strong>Brazo A · Cuantitativo.</strong> </span>
-        Tu material para este caso: información en <em>tablas y métricas</em>. Vas a tener tres sobres, cada uno con un tipo de evidencia distinta.
+  <!-- ============ SOBRE 1 — Brief inicial (gratis) ============ -->
+  <div class="sobre s1 closed" id="sobre-1" onclick="toggleSobre(this, event)" data-cost="0">
+    <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
+    <div class="sobre-label">Sobre 1 · Brief inicial <span class="sobre-cost free">gratis</span></div>
+    <div class="sobre-locked-title">Qué pasa en NovaMed y quiénes están enfrentados</div>
+    <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
+    <div class="sobre-content">
+      <div class="sobre-title">Qué pasa en <em>NovaMed</em></div>
+      <p class="card-sub" style="margin-bottom:18px;">El brief que recibe tu equipo al iniciar. Información de superficie, dos versiones enfrentadas.</p>
+
+      <div class="card-body" style="margin-bottom:14px;">
+        <p>NovaMed es una red de clínicas medianas. Hace 3 meses implementaron <strong>TurnoFácil</strong>, un sistema de gestión de turnos online comprado a un proveedor externo. El objetivo: reducir la carga del call center y modernizar la experiencia del paciente.</p>
+        <p>Hoy, el Gerente de IT y la Directora de Operaciones tienen versiones <em>completamente opuestas</em> sobre cómo está funcionando. El CFO, recién llegado, tiene reunión con el proveedor <strong>el viernes</strong> para decidir si renueva o cancela el contrato.</p>
+        <p>Le pidió a tu equipo un diagnóstico claro en una sola página.</p>
       </div>
-    </div>
 
-    <div class="sobre s1 closed" id="sobre-sobre-1a" onclick="toggleSobre(this, event)">
-      <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
-      <div class="sobre-label">Sobre 1A · se entrega al inicio</div>
-      <div class="sobre-locked-title">Métricas y tablas del sistema</div>
-      <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
-      <div class="sobre-content">
-        <div class="sobre-title">Datos operacionales y de <em>uso</em></div>
-        
-      <p class="card-sub" style="margin-bottom:18px;">Reporte automático del sistema y métricas del call center, 90 días post-lanzamiento.</p>
+      <span class="editorial-marker"><span class="dash">—</span>Las dos versiones</span>
 
-      <span class="editorial-marker"><span class="dash">—</span>Métricas técnicas del sistema (fuente: IT)</span>
-      <table class="data-table">
-        <tr><th>Métrica</th><th class="num">Pre-TurnoFácil</th><th class="num">Post (90d)</th><th class="num">Δ</th></tr>
-        <tr><td>Uptime</td><td class="num">—</td><td class="num">99.2%</td><td class="num" style="color:var(--brazo-A)">OK</td></tr>
-        <tr><td>Tickets de soporte / mes</td><td class="num">142</td><td class="num">99</td><td class="num" style="color:var(--brazo-A)">–30%</td></tr>
-        <tr><td>Tiempo medio de carga (s)</td><td class="num">—</td><td class="num">1.8</td><td class="num">—</td></tr>
-        <tr><td>Incidentes críticos / mes</td><td class="num">—</td><td class="num">0</td><td class="num" style="color:var(--brazo-A)">OK</td></tr>
-      </table>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-sub" style="margin-bottom:6px;">Martín Sosa · Gerente de IT</div>
+          <div class="card-body">
+            <p>"El sistema funciona bien. Cero incidentes críticos en 3 meses. Uptime 99.2%. Los tickets de soporte bajaron un 30%."</p>
+          </div>
+          <div class="tags"><span class="tag">satisfecho</span></div>
+        </div>
+        <div class="card">
+          <div class="card-sub" style="margin-bottom:6px;">Carla Vega · Directora de Operaciones</div>
+          <div class="card-body">
+            <p>"Desde que lanzaron esto, es caos diario. Los médicos coordinan turnos por WhatsApp. No mejoró nada."</p>
+          </div>
+          <div class="tags"><span class="tag alert">disconforme</span></div>
+        </div>
+      </div>
 
-      <span class="editorial-marker" style="margin-top:24px;"><span class="dash">—</span>Métricas operacionales (fuente: Ops)</span>
-      <table class="data-table">
-        <tr><th>Métrica</th><th class="num">Pre</th><th class="num">Post (90d)</th><th class="num">Δ</th></tr>
-        <tr><td>Llamadas al call center / día</td><td class="num">412</td><td class="num">386</td><td class="num">–6%</td></tr>
-        <tr><td>Turnos coordinados por WhatsApp</td><td class="num">0</td><td class="num">~120/día</td><td class="num" style="color:var(--accent)">+∞</td></tr>
-        <tr><td>Satisfacción de pacientes (NPS)</td><td class="num">—</td><td class="num">67%</td><td class="num">sin benchmark</td></tr>
-        <tr><td>% turnos completados vía sistema</td><td class="num">—</td><td class="num">40–80%</td><td class="num" style="color:var(--accent)">inconsistente</td></tr>
-      </table>
-
-      <div class="banner warn" style="margin-top:18px;">
-        <span class="banner-icon">!</span>
-        <div>El % de turnos completados por sistema tiene una banda muy amplia: <strong>IT reporta 80%, Ops reporta 40%</strong>. La diferencia no es ruido — están contando cosas distintas.</div>
+      <span class="editorial-marker" style="margin-top:24px;"><span class="dash">—</span>Lo que está en juego</span>
+      <div class="card-body">
+        <p>El proveedor ofrece renovar el contrato y, si se firma, agregar un módulo de <em>"gestión de urgencias"</em> por <strong>USD 40.000 extra</strong>. El CFO necesita decidir antes del viernes.</p>
       </div>
 
       <div class="facilitator-note">
-        <strong>Para el facilitador:</strong> Dar 3 minutos para que el equipo lea la tabla, marque inconsistencias y formule una hipótesis cuantitativa del problema central. No responder preguntas todavía.
+        <strong>Para el facilitador:</strong> Este sobre se abre con el inicio del cronómetro. No tiene costo. Es el punto de partida obligatorio. Si el equipo no lo abre, el cronómetro queda parado en 45:00.
       </div>
     </div>
-      </div>
-    </div>
+  </div>
 
-    <div class="sobre s2 closed" id="sobre-sobre-2a" onclick="toggleSobre(this, event)">
-      <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
-      <div class="sobre-label">Sobre 2A · el equipo decide cuándo abrirlo</div>
-      <div class="sobre-locked-title">Distribución detallada a 90 días</div>
-      <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
-      <div class="sobre-content">
-        <div class="sobre-title">Distribución de turnos y <em>adopción</em></div>
-        
-      <p class="card-sub" style="margin-bottom:18px;">Análisis detallado de los 90 días post-lanzamiento. Generado por Ops a pedido del CFO.</p>
+  <!-- ============ SOBRE 2 — Datos del sistema (−2:30) ============ -->
+  <div class="sobre s2 closed" id="sobre-2" onclick="toggleSobre(this, event)" data-cost="150">
+    <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
+    <div class="sobre-label">Sobre 2 · Datos del sistema <span class="sobre-cost cost">−2:30 min</span></div>
+    <div class="sobre-locked-title">Métricas, distribución de turnos, análisis de tickets</div>
+    <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
+    <div class="sobre-content">
+      <div class="sobre-title">Lo que dicen los <em>datos</em></div>
+      <p class="card-sub" style="margin-bottom:18px;">Reportes automáticos del sistema y análisis operativo a 90 días post-lanzamiento.</p>
 
-      <span class="editorial-marker"><span class="dash">—</span>Distribución de tipos de turno (n = 27.840 turnos, 90 días)</span>
+      <span class="editorial-marker"><span class="dash">—</span>Métricas técnicas (fuente: IT)</span>
       <table class="data-table">
-        <tr><th>Tipo de turno</th><th class="num">% del total</th><th class="num">% por TurnoFácil</th><th class="num">% por WhatsApp/call</th></tr>
-        <tr><td>Programado</td><td class="num">40%</td><td class="num" style="color:var(--brazo-A)">94%</td><td class="num">6%</td></tr>
+        <tr><th>Métrica</th><th class="num">Pre</th><th class="num">Post (90d)</th><th class="num">Δ</th></tr>
+        <tr><td>Uptime del sistema</td><td class="num">—</td><td class="num">99.2%</td><td class="num" style="color:#2C7A4A">OK</td></tr>
+        <tr><td>Tickets de soporte / mes</td><td class="num">142</td><td class="num">99</td><td class="num" style="color:#2C7A4A">–30%</td></tr>
+        <tr><td>Incidentes críticos</td><td class="num">—</td><td class="num">0</td><td class="num" style="color:#2C7A4A">OK</td></tr>
+      </table>
+
+      <span class="editorial-marker" style="margin-top:20px;"><span class="dash">—</span>Métricas operacionales (fuente: Ops)</span>
+      <table class="data-table">
+        <tr><th>Métrica</th><th class="num">Pre</th><th class="num">Post (90d)</th></tr>
+        <tr><td>Llamadas al call center / día</td><td class="num">412</td><td class="num">386 (–6%)</td></tr>
+        <tr><td>Turnos coordinados por WhatsApp</td><td class="num">0</td><td class="num" style="color:var(--accent)">~120/día</td></tr>
+        <tr><td>% turnos completados vía sistema</td><td class="num">—</td><td class="num" style="color:var(--accent)">40–80%</td></tr>
+      </table>
+
+      <span class="editorial-marker" style="margin-top:20px;"><span class="dash">—</span>Distribución de tipos de turno (n = 27.840 en 90 días)</span>
+      <table class="data-table">
+        <tr><th>Tipo</th><th class="num">% del total</th><th class="num">% por sistema</th><th class="num">% por WhatsApp</th></tr>
+        <tr><td>Programado</td><td class="num">40%</td><td class="num" style="color:#2C7A4A">94%</td><td class="num">6%</td></tr>
         <tr><td>Urgencia / mismo día</td><td class="num"><strong style="color:var(--accent)">60%</strong></td><td class="num" style="color:var(--accent)">8%</td><td class="num" style="color:var(--accent)">92%</td></tr>
       </table>
 
-      <span class="editorial-marker" style="margin-top:24px;"><span class="dash">—</span>Análisis de tickets de IT por categoría</span>
+      <span class="editorial-marker" style="margin-top:20px;"><span class="dash">—</span>Análisis de tickets de IT por categoría</span>
       <table class="data-table">
         <tr><th>Categoría</th><th class="num">% del volumen</th></tr>
         <tr><td>"Cómo cargo un turno de urgencia" (consulta de uso)</td><td class="num">34%</td></tr>
@@ -487,124 +337,25 @@
       </table>
 
       <div class="banner warn" style="margin-top:18px;">
-        <span class="banner-icon">→</span>
-        <div>El 60% de los turnos son urgencias. TurnoFácil resuelve el 94% de los programados, pero solo el 8% de las urgencias. <em>El sistema no falla — está configurado para resolver el problema incorrecto.</em></div>
-      </div>
-
-      <span class="editorial-marker" style="margin-top:24px;"><span class="dash">—</span>Costo del módulo de urgencias ofrecido</span>
-      <table class="data-table">
-        <tr><th>Concepto</th><th class="num">Costo</th></tr>
-        <tr><td>Activación del módulo de urgencias (propuesta proveedor)</td><td class="num">USD 40.000 / año</td></tr>
-        <tr><td>Costo estimado de seguir con WhatsApp (riesgo + tiempo)*</td><td class="num">USD 75.000 / año</td></tr>
-      </table>
-      <p class="card-sub" style="margin-top:6px;">* Estimación basada en horas-médico desperdiciadas y riesgo legal.</p>
-
-      <div class="facilitator-note">
-        <strong>Para el facilitador:</strong> Observar cuándo el equipo abre este sobre. Equipos cuanti suelen abrirlo rápido. El dato del 60% es el más reencuadrante.
-      </div>
-    </div>
-      </div>
-    </div>
-
-    <div class="sobre s3 closed" id="sobre-sobre-3a" onclick="toggleSobre(this, event)">
-      <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
-      <div class="sobre-label">Sobre 3A · solo si el equipo lo pide (cuesta 2 min)</div>
-      <div class="sobre-locked-title">Análisis del contrato (datos)</div>
-      <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
-      <div class="sobre-content">
-        <div class="sobre-title">Análisis del <em>contrato</em> vigente</div>
-        
-      <p class="card-sub" style="margin-bottom:18px;">Revisión legal y económica del contrato firmado con TurnoFácil hace 6 meses.</p>
-
-      <table class="data-table">
-        <tr><th>Módulo</th><th>Estado en contrato</th><th class="num">Costo</th><th>Estado actual</th></tr>
-        <tr><td>Turnos programados</td><td>Anexo A</td><td class="num">incluido</td><td style="color:var(--brazo-A)">activo</td></tr>
-        <tr><td>Reportes y métricas</td><td>Anexo B</td><td class="num">incluido</td><td style="color:var(--brazo-A)">activo</td></tr>
-        <tr><td>Gestión de urgencias</td><td><strong style="color:var(--accent)">Anexo C, pág. 14</strong></td><td class="num"><strong style="color:var(--accent)">USD 0</strong></td><td style="color:var(--accent)">no activado</td></tr>
-      </table>
-
-      <div class="banner accent" style="margin-top:18px;">
-        <span class="banner-icon">→</span>
-        <div>El módulo de urgencias <strong>ya está pagado</strong> en el contrato original. Nunca fue activado porque nadie revisó el Anexo C al momento de la implementación. El proveedor está ofreciendo cobrar USD 40.000 <em>por algo que la empresa ya compró</em>.</div>
+        <span class="banner-icon">!</span>
+        <div>El % de turnos completados por sistema tiene una banda muy amplia: <strong>IT reporta 80%, Ops reporta 40%</strong>. Están contando cosas distintas.</div>
       </div>
 
       <div class="facilitator-note">
-        <strong>Para el facilitador:</strong> Este dato reencuadra el problema económico. En el brazo cuanti, suelen llegar acá con un cálculo costo-beneficio ya iniciado.
-      </div>
+        <strong>Para el facilitador:</strong> Este sobre tiene el dato clave del 60% urgencias. Equipos que lo abren temprano tienen mejor diagnóstico estructural.
       </div>
     </div>
   </div>
 
-
-  <!-- ====================== BRAZO B — CUALI ====================== -->
-  <div class="brazo-only-B">
-    <div class="banner accent">
-      <span class="banner-icon">B</span>
-      <div>
-        <span class="only-facilitador"><strong>Brazo B · Cualitativo.</strong> </span>
-        Tu material para este caso: información en <em>entrevistas y testimonios</em>. Vas a tener tres sobres, cada uno con un tipo de evidencia distinta.
-      </div>
-    </div>
-      </div>
-    </div>
-
-    <div class="sobre s1 closed" id="sobre-sobre-1b" onclick="toggleSobre(this, event)">
-      <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
-      <div class="sobre-label">Sobre 1B · se entrega al inicio</div>
-      <div class="sobre-locked-title">Entrevistas a IT y Operaciones</div>
-      <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
-      <div class="sobre-content">
-        <div class="sobre-title">Voces <em>enfrentadas</em></div>
-        
-      <p class="card-sub" style="margin-bottom:18px;">Dos entrevistas internas hechas por RRHH la semana pasada, a pedido del CFO. Se transcribieron literalmente.</p>
-
-      <div class="card">
-        <div class="card-header" style="margin-bottom:8px;">
-          <div class="card-icon">G</div>
-          <div>
-            <div class="card-title" style="font-size:15px;">Entrevista a Martín Sosa</div>
-            <div class="card-sub">Gerente de IT</div>
-          </div>
-        </div>
-        <div class="quote">"El sistema está funcionando bien. Tuvimos cero incidentes críticos en tres meses. Los tickets de soporte son mínimos. Si los médicos se quejan, es porque no se acostumbran al cambio — siempre pasa lo mismo. En seis meses se va a normalizar."</div>
-        <div class="quote">"Yo cumplí con el alcance que me dieron. Si querían urgencias, había que decirlo desde el día uno. Nadie me lo dijo."</div>
-        <div class="tags"><span class="tag">tono defensivo</span><span class="tag">confianza en métricas técnicas</span></div>
-      </div>
-
-      <div class="card">
-        <div class="card-header" style="margin-bottom:8px;">
-          <div class="card-icon">D</div>
-          <div>
-            <div class="card-title" style="font-size:15px;">Entrevista a Carla Vega</div>
-            <div class="card-sub">Directora de Operaciones</div>
-          </div>
-        </div>
-        <div class="quote">"Acá hay un caos diario. Mis médicos me piden todos los días que volvamos al sistema anterior. Están usando WhatsApp porque no tienen otra opción. Esto es insostenible."</div>
-        <div class="quote">"Yo no participé de la compra. Si me hubieran preguntado, les habría dicho que la mayoría de nuestros turnos son del mismo día. No turnos programados con dos semanas de anticipación, como en una clínica privada."</div>
-        <div class="tags"><span class="tag alert">tono de queja sostenida</span><span class="tag">workaround consolidado</span></div>
-      </div>
-
-      <div class="banner warn" style="margin-top:14px;">
-        <span class="banner-icon">!</span>
-        <div>Las dos personas no se contradicen sobre los hechos — se contradicen sobre <strong>qué cuenta como el problema</strong>. IT mide "sistema funcionando técnicamente". Ops mide "problema operativo resuelto". <em>Las dos versiones pueden ser verdaderas al mismo tiempo.</em></div>
-      </div>
-
-      <div class="facilitator-note">
-        <strong>Para el facilitador:</strong> Dar 3 minutos para que el equipo lea las dos entrevistas y mapee dónde está el desacuerdo. No responder preguntas todavía.
-      </div>
-    </div>
-      </div>
-    </div>
-
-    <div class="sobre s2 closed" id="sobre-sobre-2b" onclick="toggleSobre(this, event)">
-      <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
-      <div class="sobre-label">Sobre 2B · el equipo decide cuándo abrirlo</div>
-      <div class="sobre-locked-title">Voces del piso clínico</div>
-      <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
-      <div class="sobre-content">
-        <div class="sobre-title">Voces del <em>piso clínico</em></div>
-        
-      <p class="card-sub" style="margin-bottom:18px;">Observaciones de campo y entrevistas con médicos y enfermeros del turno mañana de dos clínicas, hechas por una consultora externa hace dos semanas.</p>
+  <!-- ============ SOBRE 3 — Voces del piso (−2:30) ============ -->
+  <div class="sobre s3 closed" id="sobre-3" onclick="toggleSobre(this, event)" data-cost="150">
+    <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
+    <div class="sobre-label">Sobre 3 · Voces del piso <span class="sobre-cost cost">−2:30 min</span></div>
+    <div class="sobre-locked-title">Médicos, enfermeros y coordinadores en sus propias palabras</div>
+    <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
+    <div class="sobre-content">
+      <div class="sobre-title">Las voces del <em>piso clínico</em></div>
+      <p class="card-sub" style="margin-bottom:18px;">Entrevistas con personal clínico de dos sedes, realizadas por una consultora externa hace dos semanas.</p>
 
       <div class="quote">
         "Mirá, yo entiendo que tienen un sistema nuevo. Pero la mayoría de mis pacientes me llaman a las 7 de la mañana porque tienen fiebre y quieren venir a las 10. Eso no es un turno programado, es una urgencia. El sistema no me deja gestionarlas. Entonces uso WhatsApp con mi secretaria, como siempre."
@@ -628,29 +379,110 @@
 
       <div class="banner warn" style="margin-top:14px;">
         <span class="banner-icon">→</span>
-        <div>Cuatro voces independientes coinciden: <strong>el 60% de los turnos son urgencias</strong> y <strong>el sistema no las gestiona</strong>. <em>Nadie en IT preguntó esto antes de la compra.</em> Carla Vega lo intuía pero no fue convocada al proceso.</div>
+        <div>Cuatro voces independientes coinciden: <strong>60% son urgencias</strong>, el sistema no las gestiona, y <em>"el módulo existía pero no se había contratado"</em>.</div>
       </div>
 
       <div class="facilitator-note">
-        <strong>Para el facilitador:</strong> Observar cuándo el equipo abre este sobre. Equipos cuali suelen abrirlo después de discutir las dos versiones del Sobre 1B. Las voces del piso reencuadran el problema con un peso narrativo fuerte.
+        <strong>Para el facilitador:</strong> Este sobre humaniza el dato del 60%. La frase de Admisión sobre el módulo es una pista hacia el contrato — pero solo si la conectan.
       </div>
     </div>
-      </div>
-    </div>
+  </div>
 
-    <div class="sobre s3 closed" id="sobre-sobre-3b" onclick="toggleSobre(this, event)">
-      <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
-      <div class="sobre-label">Sobre 3B · solo si el equipo lo pide (cuesta 2 min)</div>
-      <div class="sobre-locked-title">La historia del contrato</div>
-      <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
-      <div class="sobre-content">
-        <div class="sobre-title">La historia del <em>contrato</em></div>
-        
-      <p class="card-sub" style="margin-bottom:18px;">Entrevista a Lucía Méndez, abogada interna de la empresa, que firmó el contrato con TurnoFácil hace 6 meses.</p>
+  <!-- ============ SOBRE 4 — Economía y contrato (−2:30) ============ -->
+  <div class="sobre s4 closed" id="sobre-4" onclick="toggleSobre(this, event)" data-cost="150">
+    <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
+    <div class="sobre-label">Sobre 4 · Economía y contrato <span class="sobre-cost cost">−2:30 min</span></div>
+    <div class="sobre-locked-title">El módulo de USD 40.000 y lo que dice el Anexo C</div>
+    <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
+    <div class="sobre-content">
+      <div class="sobre-title">El <em>contrato</em> y la oferta del proveedor</div>
+      <p class="card-sub" style="margin-bottom:18px;">Análisis económico de la propuesta del proveedor y revisión del contrato vigente firmado hace 6 meses.</p>
+
+      <span class="editorial-marker"><span class="dash">—</span>Propuesta del proveedor (vigente hasta el viernes)</span>
+      <table class="data-table">
+        <tr><th>Concepto</th><th class="num">Costo / año</th></tr>
+        <tr><td>Renovación del contrato actual</td><td class="num">USD 180.000</td></tr>
+        <tr><td><strong>Módulo de gestión de urgencias (nuevo)</strong></td><td class="num"><strong>USD 40.000</strong></td></tr>
+        <tr><td>Total renovación + urgencias</td><td class="num">USD 220.000</td></tr>
+      </table>
+
+      <span class="editorial-marker" style="margin-top:20px;"><span class="dash">—</span>Análisis del contrato vigente (Anexo C)</span>
+      <table class="data-table">
+        <tr><th>Módulo</th><th>Estado en contrato</th><th class="num">Costo</th><th>Activación</th></tr>
+        <tr><td>Turnos programados</td><td>Anexo A</td><td class="num">incluido</td><td style="color:#2C7A4A">activo</td></tr>
+        <tr><td>Reportes y métricas</td><td>Anexo B</td><td class="num">incluido</td><td style="color:#2C7A4A">activo</td></tr>
+        <tr><td>Gestión de urgencias</td><td><strong style="color:var(--accent)">Anexo C, pág. 14</strong></td><td class="num"><strong style="color:var(--accent)">USD 0</strong></td><td style="color:var(--accent)">NO activado</td></tr>
+      </table>
+
+      <div class="banner accent" style="margin-top:18px;">
+        <span class="banner-icon">→</span>
+        <div>El módulo de urgencias <strong>ya está pagado</strong> en el contrato original, Anexo C, página 14. <em>Nunca fue activado.</em> El proveedor está ofreciendo cobrar USD 40.000 por algo que la empresa ya compró.</div>
+      </div>
+
+      <span class="editorial-marker" style="margin-top:20px;"><span class="dash">—</span>Análisis costo-beneficio</span>
+      <table class="data-table">
+        <tr><th>Escenario</th><th class="num">Costo anual</th><th>Resuelve urgencias</th></tr>
+        <tr><td>Mantener WhatsApp (costo oculto en horas-médico + riesgo legal)</td><td class="num" style="color:var(--accent)">~USD 75.000</td><td>parcialmente</td></tr>
+        <tr><td>Pagar el módulo nuevo</td><td class="num" style="color:#B8842C">USD 40.000</td><td style="color:#2C7A4A">sí</td></tr>
+        <tr><td>Activar Anexo C (ya pagado)</td><td class="num" style="color:#2C7A4A">USD 0</td><td style="color:#2C7A4A">sí</td></tr>
+      </table>
+
+      <div class="facilitator-note">
+        <strong>Para el facilitador:</strong> Sobre clave. Equipos que lo abren llegan a la recomendación correcta ("activar Anexo C, ahorrar 40k"). Si lo dejan cerrado, su árbol va a tener una causa raíz incompleta.
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SOBRE 5 — Historia del proceso (−2:30) ============ -->
+  <div class="sobre s5 closed" id="sobre-5" onclick="toggleSobre(this, event)" data-cost="150">
+    <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
+    <div class="sobre-label">Sobre 5 · Historia del proceso <span class="sobre-cost cost">−2:30 min</span></div>
+    <div class="sobre-locked-title">Cómo se compró el sistema y por qué nadie leyó el Anexo C</div>
+    <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
+    <div class="sobre-content">
+      <div class="sobre-title">Cómo <em>llegamos</em> acá</div>
+      <p class="card-sub" style="margin-bottom:18px;">Cronología de la compra y entrevistas a la abogada interna que firmó el contrato hace 6 meses.</p>
+
+      <span class="editorial-marker"><span class="dash">—</span>Cronología</span>
+
+      <div class="card">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-left"><div class="tl-dot active"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-title">Mes –6 · Decisión de compra</div>
+              <div class="tl-body">IT evaluó 3 proveedores. TurnoFácil ganó por precio. <em>No hubo participación formal de Operaciones</em> en la evaluación.</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-title">Mes –2 · Implementación</div>
+              <div class="tl-body">El sistema se configuró sobre los tipos de turno del sistema viejo. El módulo de urgencias <em>no fue activado porque "no estaba en el alcance original"</em>.</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div class="tl-content">
+              <div class="tl-title">Mes 0 · Lanzamiento</div>
+              <div class="tl-body">Capacitación de 2 horas al personal administrativo. El equipo clínico no recibió capacitación formal.</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-left"><div class="tl-dot active"></div></div>
+            <div class="tl-content">
+              <div class="tl-title">Mes +3 · Hoy</div>
+              <div class="tl-body">CFO nuevo pide diagnóstico antes del viernes.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <span class="editorial-marker" style="margin-top:20px;"><span class="dash">—</span>Entrevista a Lucía Méndez, abogada interna</span>
 
       <div class="quote">
-        "Yo revisé el contrato desde lo legal. No es mi función revisar el alcance técnico. Cuando lo recibí, ya venía con todos los anexos firmados de hecho por el área que lo había negociado. Yo confirmé que las cláusulas legales estuvieran en orden."
-        <div class="quote-author">— Lucía Méndez, abogada interna</div>
+        "Yo revisé el contrato desde lo legal. No es mi función revisar el alcance técnico. Cuando lo recibí, ya venía con todos los anexos firmados de hecho por el área que lo había negociado."
+        <div class="quote-author">— Lucía Méndez</div>
       </div>
 
       <div class="quote">
@@ -658,27 +490,23 @@
         <div class="quote-author">— Lucía Méndez</div>
       </div>
 
-      <div class="banner accent" style="margin-top:18px;">
+      <div class="banner warn" style="margin-top:14px;">
         <span class="banner-icon">→</span>
-        <div>El módulo de urgencias <strong>está incluido sin costo adicional</strong> en el Anexo C del contrato vigente, página 14. Nunca fue activado porque el proceso interno trataba al contrato como un trámite legal, no como un mapa de capacidades. <em>El proveedor está ofreciendo cobrar USD 40.000 por algo que ya está pagado.</em></div>
+        <div>El contrato se trató como <strong>trámite legal</strong>, no como mapa de capacidades. Cada área cumplió su parte. <em>Nadie miró el todo.</em></div>
       </div>
 
       <div class="facilitator-note">
-        <strong>Para el facilitador:</strong> Este dato reencuadra el problema como uno de proceso. En el brazo cuali, los equipos suelen llegar acá con una hipótesis sobre la fragmentación de roles.
-      </div>
+        <strong>Para el facilitador:</strong> Este sobre tiene la causa raíz estructural ("nadie miró el todo"). Es el más profundo pero también el más costoso de descubrir.
       </div>
     </div>
   </div>
-      </div>
-    </div>
 
-    <hr class="divider">
+  <hr class="divider">
   <div class="banner info">
     <span class="banner-icon">→</span>
-    <div>Una vez que el equipo procesó los sobres, avanzá a la sección <strong>Árbol</strong> para construir el entregable.</div>
+    <div>Cuando hayan procesado los sobres que decidan abrir, avanzá a la sección <strong>Árbol</strong> para construir el diagnóstico.</div>
   </div>
 </section>
-
 
 <!-- ============================================================
      SECCIÓN 05 — ÁRBOL DE PROBLEMA
@@ -794,26 +622,99 @@ La presentación:
 
   <div class="banner warn" style="margin-top:18px;">
     <span class="banner-icon">!</span>
-    <div><strong>Control del experimento:</strong> registrá cuántas veces usaron Claude, en qué momento, y qué tipo de prompts. Esto se mide como variable secundaria para descartar que un brazo haya usado el LLM mucho más que el otro.</div>
+    <div><strong>Para el facilitador:</strong> registrá cuántas veces y en qué momentos los equipos consultaron a Claude. Sirve como dato para discutir en la retro: <em>¿qué necesitaron resolver con IA y qué resolvieron sin?</em></div>
   </div>
 
     <div class="facilitator-note">
-    <strong>Para el facilitador:</strong> El JSON exportado contiene la estructura completa del árbol (nodos, conexiones, niveles, columnas) más las tres recomendaciones. Guardalo con un identificador del equipo y del brazo para el análisis posterior. Idealmente entregar a los evaluadores <em>sin la etiqueta del brazo</em>, para evaluación ciega.
+    <strong>Para el facilitador:</strong> El JSON exportado contiene la estructura completa del árbol más las tres recomendaciones. Guardalo con el identificador del equipo (1 o 2) y los datos del cronómetro y de los sobres abiertos para el análisis posterior.
   </div>
 </section>
 
 <!-- ============================================================
-     SECCIÓN 06 — EVALUACIÓN
+     SECCIÓN — NOTAS DEL FACILITADOR (solo facilitador)
      ============================================================ -->
-<section id="evaluacion">
-  <span class="editorial-marker accent"><span class="dash">—</span>06 · Análisis post-experimento</span>
+<section id="evaluacion" class="only-facilitador">
+  <span class="editorial-marker accent"><span class="dash">—</span>Notas del facilitador</span>
 
   <div class="hero">
-    <h2 class="display">Cómo <em>medir</em> lo que pasó.</h2>
-    <p class="lead">Cómo puntuar los árboles producidos y cómo analizar los resultados para contrastar la hipótesis. La evaluación es ciega: el evaluador no sabe a qué brazo pertenece cada árbol.</p>
+    <h2 class="display">Cómo <em>observar</em> las soft skills.</h2>
+    <p class="lead">Lo que mirar durante la sesión y cómo registrar lo que pasó. La observación se hace en vivo. La evaluación de los entregables (árbol + presentación) se hace después.</p>
   </div>
 
-  <span class="editorial-marker"><span class="dash">—</span>Rúbrica de evaluación (1–3 por dimensión)</span>
+  <span class="editorial-marker"><span class="dash">—</span>Qué observar en vivo</span>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">⌾</div>
+        <div>
+          <div class="card-title">Trabajo en <em>equipo</em></div>
+          <div class="card-sub">Coordinación interna</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p><strong>Indicadores positivos:</strong> roles claros, alguien hace de facilitador interno, decisiones consensuadas, escucha activa.</p>
+        <p><strong>Alertas:</strong> una persona habla todo el tiempo, decisiones por defecto, fricciones no resueltas, paralelismo (cada uno hace su cosa).</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">⏱</div>
+        <div>
+          <div class="card-title">Manejo del <em>tiempo</em></div>
+          <div class="card-sub">Priorización con costo</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p><strong>Indicadores positivos:</strong> deciden conscientemente qué sobres abrir, asignan tiempo a cada etapa, alguien hace de "timekeeper".</p>
+        <p><strong>Alertas:</strong> abren todos los sobres por defecto sin discutir, pierden la noción del tiempo, llegan apurados al árbol.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">▲</div>
+        <div>
+          <div class="card-title">Actuar bajo <em>presión</em></div>
+          <div class="card-sub">Tolerancia a la ambigüedad</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p><strong>Indicadores positivos:</strong> avanzan con información incompleta, formulan hipótesis tentativas, distinguen lo que saben de lo que asumen.</p>
+        <p><strong>Alertas:</strong> se paralizan pidiendo más datos, postergan decisiones, no toleran la incertidumbre.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">⌬</div>
+        <div>
+          <div class="card-title">Mirada <em>interdisciplinaria</em></div>
+          <div class="card-sub">Integrar perspectivas</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p><strong>Indicadores positivos:</strong> integran la perspectiva técnica con la operativa y la económica, el árbol final tiene causas de varios tipos.</p>
+        <p><strong>Alertas:</strong> el árbol final tiene causas de un solo tipo (todo técnico o todo humano), ignoran señales fuera de su área de comodidad.</p>
+      </div>
+    </div>
+  </div>
+
+  <span class="editorial-marker"><span class="dash">—</span>Datos que el sistema captura automáticamente</span>
+
+  <div class="card">
+    <div class="card-body">
+      <p>Cada equipo deja huellas en su navegador. El facilitador puede pedirles que abran la consola del navegador y revisen <code style="font-family:var(--mono);font-size:12px;background:var(--surface-warm);padding:2px 6px;border-radius:2px;">localStorage</code> para ver:</p>
+      <p><strong>·</strong> Timestamp de inicio del cronómetro.</p>
+      <p><strong>·</strong> Qué sobres abrieron, en qué orden, y a qué minuto.</p>
+      <p><strong>·</strong> Cuánto tiempo de penalización acumularon.</p>
+      <p><strong>·</strong> Estructura del árbol final y las recomendaciones.</p>
+      <p style="margin-top:14px;">Esto le da al facilitador <em>datos objetivos</em> sobre el manejo del tiempo y la estrategia de información, complementando la observación en vivo.</p>
+    </div>
+  </div>
+
+  <span class="editorial-marker"><span class="dash">—</span>Cómo evaluar el entregable (después de la sesión)</span>
 
   <div class="card">
     <table class="rubric-table">
@@ -824,107 +725,65 @@ La presentación:
         <th style="width:28%"><span class="score-pill s3">Nivel 3</span></th>
       </tr>
       <tr>
-        <td><strong>Y1 · Estructura del árbol</strong><br><span class="card-sub">¿Llega a causa raíz?</span></td>
-        <td>Solo identifica efectos o síntomas. No hay distinción entre qué se ve y por qué pasa.</td>
-        <td>Identifica causa raíz pero no la distingue claramente de síntomas. Los niveles están mezclados.</td>
-        <td>Tres niveles claramente diferenciados. Causa raíz accionable y verificable. Conexiones causales explícitas.</td>
+        <td><strong>Estructura del árbol</strong><br><span class="card-sub">¿Llega a causa raíz?</span></td>
+        <td>Solo identifica efectos o síntomas.</td>
+        <td>Identifica causa raíz pero no la distingue claramente de síntomas.</td>
+        <td>Tres niveles diferenciados. Causa raíz accionable. Conexiones explícitas.</td>
       </tr>
       <tr>
-        <td><strong>Y2 · Gestión de información</strong><br><span class="card-sub">¿Cuándo cerró el diagnóstico?</span></td>
-        <td>Cerró sin abrir el Sobre 2, o lo abrió y no cambió su hipótesis con la nueva info.</td>
-        <td>Abrió el Sobre 2 y actualizó la hipótesis. No pidió Sobre 3 o lo pidió sin justificación clara.</td>
-        <td>Abrió el Sobre 2 con hipótesis formulada y pidió el Sobre 3 con una razón explícita.</td>
+        <td><strong>Uso de información</strong><br><span class="card-sub">¿Estrategia con los sobres?</span></td>
+        <td>Abrieron todos los sobres sin discutir, o se quedaron con uno solo.</td>
+        <td>Eligieron sobres pero sin justificar el criterio.</td>
+        <td>Eligieron sobres con razonamiento explícito, midiendo costo-beneficio.</td>
       </tr>
       <tr>
-        <td><strong>Y3 · Claridad al decisor</strong><br><span class="card-sub">¿El CFO entiende qué hacer?</span></td>
-        <td>Vago o teórico. El CFO no podría tomar una decisión el viernes con este árbol.</td>
-        <td>Recomendación clara pero sin owner o sin plazo. O un solo nivel de acción (no distingue corto/medio/largo).</td>
-        <td>Las tres recomendaciones tienen acción + owner + plazo. Distingue inmediato, de proceso y estructural.</td>
+        <td><strong>Claridad al CFO</strong><br><span class="card-sub">¿Entiende qué hacer?</span></td>
+        <td>Vago. El CFO no podría tomar una decisión el viernes.</td>
+        <td>Recomendación clara pero sin owner o sin plazo.</td>
+        <td>Acciones con owner y plazo. Distingue inmediato, de proceso y estructural.</td>
+      </tr>
+      <tr>
+        <td><strong>Coordinación entre equipos</strong><br><span class="card-sub">¿Compartieron información con el otro equipo?</span></td>
+        <td>Cada equipo trabajó aislado, sin consultar al otro.</td>
+        <td>Hubo intercambio pero ad-hoc, sin estructura.</td>
+        <td>Coordinación deliberada, intercambios productivos, integración real.</td>
       </tr>
     </table>
   </div>
 
   <div class="banner info">
     <span class="banner-icon">i</span>
-    <div>Idealmente <strong>dos evaluadores independientes</strong> puntúan cada árbol sin saber el brazo. Después se calcula el acuerdo entre evaluadores (Cohen's kappa &gt; 0.6 es aceptable). Si hay desacuerdo, un tercer evaluador resuelve.</div>
+    <div>Idealmente <strong>dos observadores</strong> independientes evalúan a cada equipo. El acuerdo entre observadores (Cohen's kappa) indica qué tan confiable es la rúbrica para esta cohorte.</div>
   </div>
 
-  <span class="editorial-marker"><span class="dash">—</span>Cómo registrar Y2 durante la sesión</span>
-
-  <div class="card ghost">
-    <div class="card-body">
-      <p>Y1 e Y3 se evalúan después leyendo el árbol y las recomendaciones. Pero Y2 (gestión de información) requiere observación en vivo. El facilitador registra para cada equipo:</p>
-      <p><strong>·</strong> Tiempo (en minutos desde el inicio) en que abrieron el Sobre 2.</p>
-      <p><strong>·</strong> Si pidieron el Sobre 3. Si sí, en qué minuto y con qué razón verbal (transcribirla).</p>
-      <p><strong>·</strong> Si en algún momento mencionaron explícitamente <em>"el módulo podría estar en el contrato"</em> antes de pedir el Sobre 3.</p>
-    </div>
-  </div>
-
-  <span class="editorial-marker"><span class="dash">—</span>Análisis estadístico</span>
-
-  <div class="card ghost">
-    <div class="card-body">
-      <p><strong>Test principal (por outcome):</strong> Comparación de medias entre brazo A y brazo B con un <em>test de Mann-Whitney U</em> (no paramétrico, dado que las variables son rúbricas de 1–3 y no se asume normalidad). Reportar mediana de cada brazo + IC 95%.</p>
-      <p><strong>Test secundario:</strong> Para evaluar la hipótesis cruzada (cuanti gana en estructura, cuali gana en claridad), reportar los tres tests por separado y discutir el patrón. Si el patrón cruzado se confirma, la conclusión del experimento es más fuerte que cualquier diferencia agregada.</p>
-      <p><strong>Tamaño del efecto:</strong> Reportar <em>r</em> (effect size de Mann-Whitney) o Cliff's delta. r &gt; 0.3 es efecto medio; r &gt; 0.5 es grande. Con N pequeño (15-20 por brazo), efectos chicos pasarán desapercibidos.</p>
-      <p><strong>Análisis secundario:</strong> Correlación entre brazo y momento de cierre del diagnóstico. Tiempo en abrir Sobre 2, % de equipos que pidieron Sobre 3, % que llegaron al dato del contrato.</p>
-    </div>
-  </div>
-
-  <span class="editorial-marker"><span class="dash">—</span>Plantilla para registrar los resultados</span>
+  <span class="editorial-marker"><span class="dash">—</span>Para la retro</span>
 
   <div class="card">
-    <div class="card-body" style="margin-bottom:10px;">
-      <p>Esta tabla la completa el evaluador (en otra herramienta, después). Acá la dejamos como referencia.</p>
-    </div>
-    <table class="data-table">
-      <tr>
-        <th>Equipo</th>
-        <th>Brazo (ciego)</th>
-        <th class="num">Min. Sobre 2</th>
-        <th>Pidió S3</th>
-        <th class="num">Y1</th>
-        <th class="num">Y2</th>
-        <th class="num">Y3</th>
-      </tr>
-      <tr><td>E01</td><td>?</td><td class="num">—</td><td>—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
-      <tr><td>E02</td><td>?</td><td class="num">—</td><td>—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
-      <tr><td style="color:var(--muted)">…</td><td style="color:var(--muted)">…</td><td class="num" style="color:var(--muted)">…</td><td style="color:var(--muted)">…</td><td class="num" style="color:var(--muted)">…</td><td class="num" style="color:var(--muted)">…</td><td class="num" style="color:var(--muted)">…</td></tr>
-    </table>
-  </div>
-
-  <span class="editorial-marker"><span class="dash">—</span>Lo que vas a poder afirmar</span>
-
-  <div class="grid2">
-    <div class="card A">
-      <div class="card-header">
-        <div class="card-icon">✓</div>
-        <div><div class="card-title">Sí podés <em>afirmar</em></div></div>
-      </div>
-      <div class="card-body">
-        <p>Con asignación aleatoria y evaluación ciega, las diferencias observadas son atribuibles al tipo de evidencia recibida (cuanti vs. cuali).</p>
-        <p>Si el patrón cruzado se confirma (A gana en estructura, B gana en claridad), tenés evidencia para diseñar un training combinado.</p>
-      </div>
-    </div>
-    <div class="card B">
-      <div class="card-header">
-        <div class="card-icon">×</div>
-        <div><div class="card-title">No podés <em>afirmar</em></div></div>
-      </div>
-      <div class="card-body">
-        <p>Que el training en general "funciona" (no hay grupo sin training).</p>
-        <p>Que el efecto se sostiene en el tiempo (no hay medición posterior).</p>
-        <p>Que se transfiere a otros casos (sería válido replicar con un caso distinto).</p>
-      </div>
-      </div>
+    <div class="card-body">
+      <p>Después del ejercicio, una retro de 15 minutos. Preguntas guía:</p>
+      <p><strong>·</strong> ¿Cómo decidieron qué sobres abrir? ¿Hubo discusión o fue por defecto?</p>
+      <p><strong>·</strong> ¿En qué momento se dieron cuenta de que les faltaba información del otro equipo?</p>
+      <p><strong>·</strong> ¿Hubo paralizaciones? ¿Qué las resolvió?</p>
+      <p><strong>·</strong> Si volvieran a hacerlo, ¿qué cambiarían?</p>
+      <p><strong>·</strong> ¿Qué hicieron sin IA que les hubiera costado más con IA? ¿Y al revés?</p>
     </div>
   </div>
 
   <div class="footer">
-    <div class="footer-text">NovaMed · Experimento <em>Cuanti vs. Cuali</em></div>
+    <div class="footer-text">NovaMed · Training de <em>soft skills</em></div>
     <div class="footer-text">Hecho con cuidado.</div>
   </div>
 </section>
+
+<!-- Overlay cuando el tiempo se agota -->
+<div class="time-expired-overlay">
+  <div class="time-expired-card">
+    <div class="title" style="font-size: 28px;">Tiempo <em>agotado</em>.</div>
+    <p>El cronómetro llegó a cero. Los sobres están bloqueados. Pueden seguir usando el árbol con la información que ya tienen.</p>
+    <p>El CFO no espera más.</p>
+    <button class="btn ghost tiny" onclick="document.body.classList.remove('time-expired')">Continuar igual (solo para revisar)</button>
+  </div>
+</div>
 
 <!-- ============================================================
      MODAL DE NODO
