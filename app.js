@@ -15,10 +15,56 @@ const COLUMNAS = [
 
 let state = {
   brazo: 'none',
+  modo: 'participante',
   nodes: [],
   recommendations: ['', '', ''],
   editingNodeId: null
 };
+
+
+// ============ MODO PARTICIPANTE vs FACILITADOR ============
+function detectarModo() {
+  // Por URL param: ?modo=facilitador
+  const params = new URLSearchParams(window.location.search);
+  const modoUrl = params.get('modo');
+  if (modoUrl === 'facilitador') {
+    document.body.dataset.modo = 'facilitador';
+    state.modo = 'facilitador';
+    saveState();
+    return;
+  }
+  // Por localStorage (guardado de sesión anterior)
+  if (state.modo === 'facilitador') {
+    document.body.dataset.modo = 'facilitador';
+    return;
+  }
+  // Default: participante
+  document.body.dataset.modo = 'participante';
+  state.modo = 'participante';
+
+  // Si está en modo participante, mostrar "caso" en vez de "diseno" al inicio
+  const activa = document.querySelector('section.active');
+  if (activa && ['diseno','asignacion','evaluacion'].includes(activa.id)) {
+    setTimeout(() => showSection('caso'), 0);
+  }
+}
+
+function toggleModoFacilitador() {
+  if (state.modo === 'facilitador') {
+    state.modo = 'participante';
+  } else {
+    state.modo = 'facilitador';
+  }
+  document.body.dataset.modo = state.modo;
+  saveState();
+  // Si pasa a participante y está en una sección oculta, redirigir
+  if (state.modo === 'participante') {
+    const activa = document.querySelector('section.active');
+    if (activa && ['diseno','asignacion','evaluacion'].includes(activa.id)) {
+      showSection('caso');
+    }
+  }
+}
 
 // ============ PERSISTENCIA ============
 function saveState() {
@@ -126,42 +172,116 @@ function newNodeId() {
 }
 
 function renderTree() {
-  const container = document.getElementById('tree-grid-container');
-  if (!container) return;
+  const area = document.getElementById('tree-content-area');
+  if (!area) return;
 
-  // Construir la grilla
-  let html = '<div class="tree-grid" style="grid-template-columns: 160px repeat(' + COLUMNAS.length + ', 1fr);">';
+  // Layout parámetros
+  const NODE_WIDTH = 180;
+  const NODE_HEIGHT = 88;
+  const NODE_GAP_X = 24;
+  const ROW_HEIGHT = 110;
+  const ROW_PADDING_TOP = 20;
 
-  // Header (esquina + columnas)
-  html += '<div class="tree-header-row" style="grid-column: 1;"></div>';
-  COLUMNAS.forEach(c => {
-    html += `<div class="tree-header-row">${c.label}</div>`;
+  // Agrupar nodos por nivel manteniendo orden
+  const byLevel = {};
+  NIVELES.forEach(n => { byLevel[n.id] = []; });
+  state.nodes.forEach(n => {
+    if (byLevel[n.nivel]) byLevel[n.nivel].push(n);
   });
 
-  // Filas por nivel
+  // Calcular ancho total necesario (basado en el nivel con más nodos)
+  let maxNodesInRow = 1;
   NIVELES.forEach(nivel => {
-    html += `<div class="tree-level-label ${nivel.class}">${nivel.label}</div>`;
-    COLUMNAS.forEach(col => {
-      const cellNodes = state.nodes.filter(n => n.nivel === nivel.id && n.columna === col.id);
-      html += `<div class="tree-cell" data-nivel="${nivel.id}" data-columna="${col.id}">`;
-      cellNodes.forEach(n => {
-        const conns = n.conexiones && n.conexiones.length ? `<div class="tree-node-connections">→ ${n.conexiones.length} conex.</div>` : '';
-        html += `<div class="tree-node-card ${nivel.class}" onclick="openNode('${n.id}')" title="${escapeHtml(n.texto)}">
-          ${escapeHtml(truncate(n.texto, 80))}
-          ${conns}
-        </div>`;
-      });
-      html += `<button class="tree-add" onclick="addNodeAt('${nivel.id}', '${col.id}')">+ nodo</button>`;
-      html += '</div>';
+    const count = byLevel[nivel.id].length;
+    if (count > maxNodesInRow) maxNodesInRow = count;
+  });
+  const totalWidth = Math.max(720, maxNodesInRow * (NODE_WIDTH + NODE_GAP_X) + NODE_GAP_X);
+  const totalHeight = NIVELES.length * ROW_HEIGHT + ROW_PADDING_TOP + 20;
+
+  // Posicionar cada nodo: centrado horizontalmente en su fila
+  const positions = {}; // id -> {x, y}
+  NIVELES.forEach((nivel, rowIdx) => {
+    const nodos = byLevel[nivel.id];
+    const count = nodos.length;
+    if (count === 0) return;
+    const totalRowWidth = count * NODE_WIDTH + (count - 1) * NODE_GAP_X;
+    const startX = (totalWidth - totalRowWidth) / 2;
+    nodos.forEach((n, i) => {
+      positions[n.id] = {
+        x: startX + i * (NODE_WIDTH + NODE_GAP_X),
+        y: ROW_PADDING_TOP + rowIdx * ROW_HEIGHT
+      };
     });
   });
 
-  html += '</div>';
-  container.innerHTML = html;
+  // Construir SVG con las líneas de conexión
+  let svgPaths = '';
+  state.nodes.forEach(node => {
+    const conns = node.conexiones || [];
+    const fromPos = positions[node.id];
+    if (!fromPos) return;
+    conns.forEach(targetId => {
+      const toPos = positions[targetId];
+      if (!toPos) return;
+      // Línea: desde el centro inferior del nodo origen al centro superior del nodo destino
+      const x1 = fromPos.x + NODE_WIDTH / 2;
+      const y1 = fromPos.y + NODE_HEIGHT;
+      const x2 = toPos.x + NODE_WIDTH / 2;
+      const y2 = toPos.y;
+      // Curva bezier suave
+      const midY = (y1 + y2) / 2;
+      svgPaths += `<path d="M ${x1} ${y1} C ${x1} ${midY}, ${x2} ${midY}, ${x2} ${y2}" />`;
+    });
+  });
+
+  // Construir nodos HTML
+  let nodesHtml = '';
+  state.nodes.forEach(n => {
+    const pos = positions[n.id];
+    if (!pos) return;
+    const colLabel = COLUMNAS.find(c => c.id === n.columna)?.label || n.columna;
+    const levelLabel = NIVELES.find(l => l.id === n.nivel)?.label || n.nivel;
+    nodesHtml += `<div class="tree-node-visual ${n.nivel}"
+      style="left:${pos.x}px; top:${pos.y}px; width:${NODE_WIDTH}px; min-height:${NODE_HEIGHT}px;"
+      onclick="openNode('${n.id}')"
+      title="${escapeHtml(n.texto)}">
+      <div class="tn-label">${levelLabel}</div>
+      <div class="tn-text">${escapeHtml(n.texto)}</div>
+      <div class="tn-column-tag">· ${escapeHtml(colLabel.toLowerCase())}</div>
+    </div>`;
+  });
+
+  // Empty state
+  let emptyHtml = '';
+  if (state.nodes.length === 0) {
+    emptyHtml = `<div class="tree-empty">
+      <p>El árbol está vacío.</p>
+      <p style="font-size:13px;">Empezá agregando un <em>Efecto observado</em> con el botón de arriba.</p>
+    </div>`;
+  }
+
+  // Inyectar todo
+  area.style.minHeight = totalHeight + 'px';
+  area.innerHTML = `
+    <svg class="tree-svg" viewBox="0 0 ${totalWidth} ${totalHeight}" width="${totalWidth}" height="${totalHeight}" preserveAspectRatio="xMidYMin meet">
+      <defs>
+        <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <polygon points="0 0, 8 4, 0 8" fill="var(--border-strong)" />
+        </marker>
+      </defs>
+      ${svgPaths}
+    </svg>
+    ${nodesHtml}
+    ${emptyHtml}
+  `;
+  // Ajustar el ancho del inner para que respete el ancho del árbol
+  const inner = document.getElementById('tree-canvas-inner');
+  if (inner) inner.style.minWidth = (totalWidth + 130) + 'px';
 
   // Actualizar status
   const totalConn = state.nodes.reduce((sum, n) => sum + (n.conexiones?.length || 0), 0);
-  document.getElementById('tree-status').textContent = `${state.nodes.length} nodos · ${totalConn} conexiones`;
+  const statusEl = document.getElementById('tree-status');
+  if (statusEl) statusEl.textContent = `${state.nodes.length} nodos · ${totalConn} conexiones`;
 }
 
 function truncate(s, n) {
@@ -417,3 +537,14 @@ function copyPrompt(btn) {
 
 // ============ INICIALIZACIÓN ============
 loadState();
+detectarModo();
+applyBrazo();
+renderTree();
+
+// Listener para tecla F para alternar modo facilitador (oculto, solo facilitadores saben)
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'F' && e.shiftKey && e.ctrlKey) {
+    toggleModoFacilitador();
+    alert('Modo: ' + state.modo);
+  }
+});
