@@ -15,12 +15,55 @@ const COLUMNAS = [
 
 let state = {
   brazo: 'none',
+  equipo: null,
   modo: 'participante',
   nodes: [],
   recommendations: ['', '', ''],
   editingNodeId: null
 };
 
+
+
+// ============ ASIGNACIÓN AUTOMÁTICA DE EQUIPO ============
+function asignarEquipo() {
+  // Si ya tiene equipo asignado, no hacer nada
+  if (state.equipo === 1 || state.equipo === 2) {
+    return;
+  }
+
+  // Por URL param: ?equipo=1 o ?equipo=2 (preasignación del facilitador)
+  const params = new URLSearchParams(window.location.search);
+  const equipoUrl = params.get('equipo');
+  if (equipoUrl === '1' || equipoUrl === '2') {
+    state.equipo = parseInt(equipoUrl, 10);
+    saveState();
+    renderTeamBanner();
+    return;
+  }
+
+  // Asignación automática alternando: usar un counter global en localStorage
+  // (esto distribuye 50/50 entre navegadores que usen el mismo localStorage,
+  // pero entre navegadores distintos es efectivamente aleatorio)
+  let counter = parseInt(localStorage.getItem('novamed_team_counter') || '0', 10);
+  const team = (counter % 2) + 1; // 1 o 2 alternando
+  state.equipo = team;
+  localStorage.setItem('novamed_team_counter', String(counter + 1));
+  saveState();
+  renderTeamBanner();
+}
+
+function renderTeamBanner() {
+  const placeholder = document.getElementById('team-banner-placeholder');
+  if (!placeholder) return;
+  if (state.equipo === 1 || state.equipo === 2) {
+    placeholder.innerHTML = `<div class="team-banner">
+      <span class="team-badge">Equipo ${state.equipo}</span>
+      <span class="team-text">Tu identificación de equipo. Sirve para que el facilitador identifique sus entregables.</span>
+    </div>`;
+  } else {
+    placeholder.innerHTML = '';
+  }
+}
 
 // ============ MODO PARTICIPANTE vs FACILITADOR ============
 function detectarModo() {
@@ -496,19 +539,178 @@ function clearTree() {
 }
 
 
+
+// ============ CRONÓMETRO ============
+const TIMER_TOTAL_SECONDS = 45 * 60; // 45 minutos
+const TIMER_KEY = 'novamed_timer_v1';
+let timerInterval = null;
+
+function loadTimer() {
+  try {
+    const raw = localStorage.getItem(TIMER_KEY);
+    if (raw) {
+      const t = JSON.parse(raw);
+      // Reconstruir estado
+      if (t.startedAt) {
+        const now = Date.now();
+        const elapsed = Math.floor((now - t.startedAt) / 1000);
+        const remaining = TIMER_TOTAL_SECONDS - elapsed - (t.penaltySeconds || 0);
+        return { ...t, remaining: Math.max(0, remaining) };
+      }
+      return t;
+    }
+  } catch(e) {}
+  return { startedAt: null, penaltySeconds: 0, remaining: TIMER_TOTAL_SECONDS };
+}
+
+function saveTimer(t) {
+  try {
+    localStorage.setItem(TIMER_KEY, JSON.stringify(t));
+  } catch(e) {}
+}
+
+function formatTime(seconds) {
+  const m = Math.floor(Math.max(0, seconds) / 60);
+  const s = Math.max(0, seconds) % 60;
+  return {
+    min: String(m).padStart(2, '0'),
+    sec: String(s).padStart(2, '0')
+  };
+}
+
+function updateTimerDisplay() {
+  const t = loadTimer();
+  const remaining = t.remaining !== undefined ? t.remaining : TIMER_TOTAL_SECONDS;
+  const f = formatTime(remaining);
+  const minEl = document.getElementById('timer-min');
+  const secEl = document.getElementById('timer-sec');
+  if (minEl) minEl.textContent = f.min;
+  if (secEl) secEl.textContent = f.sec;
+
+  const bar = document.getElementById('timer-bar');
+  if (bar) {
+    bar.classList.toggle('urgent', remaining > 0 && remaining <= 300);
+    bar.classList.toggle('expired', remaining <= 0);
+  }
+  document.body.classList.toggle('time-expired', remaining <= 0 && t.startedAt !== null);
+
+  // Ocultar botón iniciar si ya arrancó
+  const startBtn = document.getElementById('timer-start-btn');
+  if (startBtn) {
+    startBtn.style.display = t.startedAt ? 'none' : '';
+  }
+}
+
+function startTimer() {
+  const t = loadTimer();
+  if (t.startedAt) return; // ya iniciado
+  const newState = {
+    startedAt: Date.now(),
+    penaltySeconds: 0,
+    remaining: TIMER_TOTAL_SECONDS
+  };
+  saveTimer(newState);
+  // Iniciar interval
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(updateTimerDisplay, 1000);
+  updateTimerDisplay();
+}
+
+function resetTimer() {
+  if (!confirm('¿Reiniciar el cronómetro y los sobres? (solo facilitador)')) return;
+  if (timerInterval) clearInterval(timerInterval);
+  localStorage.removeItem(TIMER_KEY);
+  localStorage.removeItem('novamed_sobre_log');
+  // Cerrar todos los sobres también
+  document.querySelectorAll('.sobre').forEach(s => s.classList.add('closed'));
+  document.body.classList.remove('time-expired');
+  updateTimerDisplay();
+}
+
+function addMinutes(min) {
+  const t = loadTimer();
+  if (!t.startedAt) return;
+  // "Agregar" minutos = restar segundos a penaltySeconds
+  t.penaltySeconds = Math.max(0, (t.penaltySeconds || 0) - (min * 60));
+  saveTimer(t);
+  updateTimerDisplay();
+}
+
+function applyPenalty(seconds, label) {
+  const t = loadTimer();
+  if (!t.startedAt) return;
+  t.penaltySeconds = (t.penaltySeconds || 0) + seconds;
+  saveTimer(t);
+  // Flash visual
+  showPenaltyFlash(`−${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')} · ${label}`);
+  updateTimerDisplay();
+}
+
+function showPenaltyFlash(text) {
+  // Remover anterior si existe
+  const existing = document.querySelector('.timer-penalty-flash');
+  if (existing) existing.remove();
+  const flash = document.createElement('div');
+  flash.className = 'timer-penalty-flash';
+  flash.textContent = text;
+  document.body.appendChild(flash);
+  setTimeout(() => flash.remove(), 1900);
+}
+
+// Iniciar el interval si el timer ya estaba corriendo
+function resumeTimerIfRunning() {
+  const t = loadTimer();
+  if (t.startedAt && t.remaining > 0) {
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(updateTimerDisplay, 1000);
+  }
+  updateTimerDisplay();
+}
+
 // ============ SOBRES (cerrar/abrir) ============
 function toggleSobre(elem, event) {
-  // Si está cerrado, abrir. Si está abierto, no hacer nada al click en el body.
+  // Verificar que el tiempo no se haya agotado
+  if (document.body.classList.contains('time-expired')) {
+    return;
+  }
+
   if (elem.classList.contains('closed')) {
+    // Verificar que el cronómetro esté corriendo (excepto para el primer sobre que es gratis y arranca el timer)
+    const cost = parseInt(elem.dataset.cost || '0', 10);
+    const timer = loadTimer();
+
+    // Si el cronómetro no arrancó todavía y este es el primer sobre (gratis), arrancarlo
+    if (!timer.startedAt && cost === 0) {
+      startTimer();
+    } else if (!timer.startedAt && cost > 0) {
+      // El equipo intenta abrir un sobre pago sin haber iniciado el cronómetro
+      if (!confirm('El cronómetro todavía no arrancó. Si abrís este sobre, se va a iniciar el cronómetro y descontar ' + Math.floor(cost/60) + ':' + String(cost%60).padStart(2,'0') + ' del tiempo. ¿Continuar?')) {
+        return;
+      }
+      startTimer();
+    }
+
+    // Aplicar penalización si corresponde
+    if (cost > 0) {
+      const label = elem.querySelector('.sobre-label')?.textContent?.split('·')[1]?.trim() || 'Sobre';
+      applyPenalty(cost, label);
+    }
+
     elem.classList.remove('closed');
-    // Registrar evento para análisis posterior (si el facilitador quiere ver timing)
+
+    // Registrar evento
     const sobreId = elem.id || 'unknown';
     const ts = new Date().toISOString();
     try {
       const log = JSON.parse(localStorage.getItem('novamed_sobre_log') || '[]');
-      log.push({ sobre: sobreId, abierto_en: ts, brazo: state.brazo });
+      log.push({
+        sobre: sobreId,
+        abierto_en: ts,
+        equipo: state.equipo,
+        costo_segundos: cost
+      });
       localStorage.setItem('novamed_sobre_log', JSON.stringify(log));
-    } catch(e) { /* silenciar */ }
+    } catch(e) {}
   }
 }
 
@@ -538,8 +740,10 @@ function copyPrompt(btn) {
 // ============ INICIALIZACIÓN ============
 loadState();
 detectarModo();
+asignarEquipo();
 applyBrazo();
 renderTree();
+resumeTimerIfRunning();
 
 // Listener para tecla F para alternar modo facilitador (oculto, solo facilitadores saben)
 document.addEventListener('keydown', function(e) {
