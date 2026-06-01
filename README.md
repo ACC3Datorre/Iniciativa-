@@ -1,26 +1,92 @@
-# NovaMed · Caso de Problem Solving
+# NovaMed · Trabajo bajo presión
 
-Kit completo para correr un **experimento causal de dos brazos** disfrazado de caso de problem solving. Los participantes no saben que están en un experimento — ven solo el caso, sus sobres y la herramienta del árbol. El facilitador ve toda la infraestructura experimental (diseño, asignación, rúbrica, análisis) en un modo separado.
+Caso de problem solving para entrenar las **4 soft skills que la IA no reemplaza**: trabajo en equipo, manejo del tiempo, actuar bajo presión y mirada interdisciplinaria. 45 minutos, 5 sobres, cronómetro corriendo.
 
-Mismo caso base, mismo LLM, mismo tiempo. Lo único que cambia entre brazos es el **tipo de evidencia** que reciben en sus sobres: tablas y métricas (cuanti) vs. citas y entrevistas (cuali).
-
-Estética editorial sobria, paleta violeta sobre papel, sobres cerrados que se abren al click, árbol jerárquico con conexiones SVG.
+> *La IA resuelve problemas individuales. Lo que pierde la gente con la IA es el músculo de trabajar con otros bajo presión. Este caso busca recuperarlo.*
 
 ---
 
-## Modos del sitio (importante)
+## La mecánica
 
-El sitio tiene dos modos:
+**45 minutos, dos equipos en paralelo, mismo caso, misma información disponible.** Lo que los diferencia es la **estrategia**: qué información priorizar cuando el tiempo cuesta.
 
-| Modo | Cómo se accede | Qué ve |
-|---|---|---|
-| **Participante** (default) | Cualquier URL sin parámetros | Solo: Caso · Sobres · Árbol. No menciona "experimento", "cuanti vs cuali", "hipótesis" ni "rúbrica". Su brazo asignado se presenta como "tu material" sin etiqueta técnica. |
-| **Facilitador** | `?modo=facilitador` o atajo `Ctrl+Shift+F` | Todo el sitio: Diseño del experimento · Asignación · Caso · Sobres (ambos brazos) · Árbol · Evaluación con rúbrica y análisis estadístico. |
+**6 sobres, 6 colores, 6 temáticas:**
 
-**Para correr el experimento en limpio:**
-1. El facilitador prepara la asignación en `?modo=facilitador`.
-2. A cada equipo le pasa el link **sin parámetros**, con el brazo preseteado (el facilitador edita `localStorage` o usa `?brazo=A`/`?brazo=B` — ver Notas técnicas).
-3. Los participantes nunca ven la palabra "experimento".
+| # | Sobre | Útil | Costo |
+|---|---|---|---|
+| 1 | 🟣 **Brief inicial** — el caso y las dos versiones enfrentadas | ✅ | gratis |
+| 2 | 🟢 **Datos del sistema** — métricas, 60% urgencias, tickets | ✅ | −2:30 |
+| 3 | 🟠 **Voces del piso** — médicos, enfermeros, coordinadores | ✅ | −2:30 |
+| 4 | 🟡 **Economía y contrato** — Anexo C + entrevista a abogada | ✅ | −2:30 |
+| 5 | 🟪 **Entrevista en vivo al CFO** — un compañero actúa, 5 min | ✅ pero requiere buenas preguntas | −2:30 |
+| 6 | 🔵 **Reporte del sector** — benchmarks macro de la industria | ❌ **trampa** | −2:30 |
+
+Si abren los 5 sobres pagos: gastan **12:30 minutos** del cronómetro y les quedan 32:30 para trabajar. Si se quedan con el primero solo, tienen los 45 completos pero información incompleta. **No hay respuesta correcta a qué sobres abrir** — eso es exactamente lo que se entrena.
+
+### Dos sobres especiales
+
+**El sobre trampa (Sobre 6)**: contiene datos reales pero macro del sector salud que NO ayudan a diagnosticar el problema específico de NovaMed. Castiga a los equipos que abren todo por inercia. Aprendizaje: *no toda la información disponible vale lo mismo. Discriminar antes de pedir información es una habilidad concreta que la IA debilita.*
+
+**La entrevista en vivo (Sobre 5)**: en lugar de información escrita, un compañero del equipo **actúa de Roberto Hein, el CFO**. El resto del equipo lo entrevista durante 5 minutos. El actor recibe un guion impreso del facilitador con contexto del personaje y respuestas a preguntas posibles. Las **buenas preguntas destraban información secreta** que no está en ningún otro sobre (preocupaciones políticas, qué le haría firmar tranquilo, qué piensa del proveedor). Las preguntas vagas obtienen respuestas vagas. Entrena el músculo de **hacer preguntas a humanos** — el opuesto al prompting.
+
+---
+
+## Las 4 soft skills
+
+| Skill | Cómo se entrena |
+|---|---|
+| **Trabajo en equipo** | Decidir juntos qué sobres abrir, integrar perspectivas |
+| **Manejo del tiempo** | Cronómetro visible, costo explícito por sobre, priorización forzada |
+| **Actuar bajo presión** | Tiempo escaso, información incompleta, decisión obligatoria al final |
+| **Interdisciplinario** | Cada sobre es una lente distinta. Integrar requiere salir del área de comodidad |
+
+---
+
+## Cómo se ve el sitio
+
+### Para el participante
+
+- Caso → Sobres → Árbol. Tres pestañas, nada más.
+- Identificación automática: *"Sos del Equipo 1"* o *"Sos del Equipo 2"*
+- Cronómetro grande arriba con cuenta regresiva
+- Las 4 soft skills aparecen como compromiso del training
+
+### Para el facilitador
+
+- Misma cosa **más** la sección *Notas* con:
+  - **Guion confidencial del CFO** para entregar al actor cuando se abre el Sobre 5 (botón *Imprimir guion*)
+  - Qué observar en vivo (indicadores positivos / alertas por skill)
+  - Datos automáticos que captura el sitio
+  - Rúbrica de 4 dimensiones para evaluar entregables
+  - Nota sobre el sobre trampa y cómo discutirlo en la retro
+  - Preguntas para la retro
+- Botones extra en el cronómetro: `+5 min`, `Reset`
+
+**Activar modo facilitador:** URL `?modo=facilitador` o atajo `Ctrl + Shift + F`.
+
+---
+
+## Cronómetro y penalizaciones
+
+- **45:00** al iniciar
+- **Sobre 1 abre el cronómetro y es gratis**
+- **Sobres 2–5 descuentan 2:30 min al abrir** — animación visual del descuento
+- A los 5 min restantes: barra pulsa en violeta
+- A los 0: barra roja, overlay aparece, sobres y árbol bloqueados
+- Persiste en `localStorage`
+
+---
+
+## Datos automáticos en localStorage
+
+| Key | Qué contiene |
+|---|---|
+| `novamed_timer_v1` | Timestamp de inicio + segundos de penalización |
+| `novamed_sobre_log` | Array de aperturas: qué sobre, cuándo, qué equipo, qué costo |
+| `novamed_experiment_v1` | Equipo asignado, árbol, recomendaciones |
+| `novamed_team_counter` | Counter de asignación entre equipos |
+
+Datos objetivos para el facilitador, complementan la observación en vivo.
 
 ---
 
@@ -28,190 +94,57 @@ El sitio tiene dos modos:
 
 ```
 .
-├── index.html      ← Estructura (849 líneas)
-├── styles.css      ← Diseño editorial (1046 líneas)
-├── app.js          ← Lógica (379 líneas)
+├── index.html      ← Estructura
+├── styles.css      ← Diseño editorial violeta
+├── app.js          ← Lógica: cronómetro, sobres, árbol, equipos
 ├── README.md       ← Este archivo
-└── .nojekyll       ← Para que GitHub Pages no procese con Jekyll
+└── .nojekyll       ← Para GitHub Pages
 ```
 
 ---
 
-## ¿Qué contiene el sitio?
+## Hosting en GitHub Pages
 
-Seis secciones, navegables por pestañas:
+1. Repo nuevo en GitHub
+2. Subir los 5 archivos al root
+3. Settings → Pages → `Deploy from a branch` → `main` / `/ (root)`
+4. `https://<tu-usuario>.github.io/<nombre-repo>/`
 
-| # | Sección | Qué tiene |
-|---|---|---|
-| 01 | **Diseño** | Hipótesis, brazos, variables, controles, amenazas y mitigaciones |
-| 02 | **Asignación** | Botón de randomización + protocolo para corrida real |
-| 03 | **Caso** | El caso NovaMed (idéntico para los dos brazos) |
-| 04 | **Sobres** | Tres sobres por brazo. Se muestran solo los del brazo asignado |
-| 05 | **Árbol** | Constructor interactivo del árbol de problema |
-| 06 | **Evaluación** | Rúbrica, registro y plan de análisis estadístico |
+Sin build, sin dependencias, sin backend.
 
 ---
 
-## Hipótesis
+## Cómo correr la sesión
 
-> El énfasis en datos **cuantitativos** producirá árboles con mejor estructura de causa raíz vs. síntoma. El énfasis en información **cualitativa** producirá recomendaciones más claras y accionables para el decisor. Ambos enfoques son útiles, pero para dimensiones distintas del problema.
+### Antes
 
-Predicción cruzada (no "uno gana en todo"), más informativa que una hipótesis simple porque te dice cómo combinar los enfoques en el training final.
+1. Compartir el link del sitio con los participantes
+2. Dos equipos juntos físicamente en una sala
+3. Tener `?modo=facilitador` abierto en tu propia máquina
 
----
+### Durante (45 min)
 
-## Brazos
+1. **Min 0:** brief verbal. Cada equipo abre su Sobre 1. El cronómetro arranca con esa apertura.
+2. **Min 0–40:** trabajo en equipo. Deciden qué sobres abrir según el costo. Construyen el árbol. Usan Claude con los prompts sugeridos.
+3. **Min 40–45:** entregable final. Cada equipo exporta su JSON y muestra su presentación al CFO.
 
-| | Brazo A · Cuanti | Brazo B · Cuali |
-|---|---|---|
-| Sobre 1 | Tablas de métricas, tickets, ratios | Entrevistas a IT y Operaciones, citas literales |
-| Sobre 2 | Distribución estadística de turnos, costos | Voces del piso (médicos, enfermeros, admisión) |
-| Sobre 3 | Tabla del contrato y el dato del Anexo C | Entrevista a la abogada sobre el contrato |
+### Después
 
-**Los hechos son idénticos en ambos brazos.** Lo que cambia es la forma en que están presentados. Es la única manipulación experimental.
-
----
-
-## Variables medidas
-
-- **Y1 · Estructura del árbol** (rúbrica 1–3): ¿llega a causa raíz?
-- **Y2 · Gestión de información** (rúbrica 1–3): ¿cuándo cerró el diagnóstico? ¿pidió Sobre 3 con justificación?
-- **Y3 · Claridad al decisor** (rúbrica 1–3): ¿el CFO entiende qué hacer leyéndolo en 30 segundos?
-
-Y2 requiere registro en vivo durante la sesión. Y1 e Y3 se evalúan después, **ciego al brazo**.
+- 15 min de retro con las preguntas guía de la sección *Notas*
+- Comparar entregables de los dos equipos
+- Cruzar observación con datos del `localStorage`
 
 ---
 
-## Cómo hostear en GitHub Pages
+## Decisiones de diseño
 
-1. Creá un repo nuevo en GitHub.
-2. Subí los 5 archivos al root del repo.
-3. En el repo, andá a **Settings → Pages**.
-4. En "Build and deployment", source = `Deploy from a branch`, branch = `main`, folder = `/ (root)`.
-5. Guardá. En 1-2 minutos, el sitio va a estar en `https://<tu-usuario>.github.io/<nombre-del-repo>/`.
-
-Sin build, sin dependencias, sin backend. El estado se guarda en `localStorage`.
+- **Asignación silenciosa de equipo**: saca discusiones improductivas sobre la división
+- **Mismo contenido para ambos equipos**: lo que importa es la estrategia
+- **Sobres con costo real**: el cronómetro hace literal lo que antes era metafórico
+- **Estética editorial sobria**: no hay gamification exagerada. La presión viene del cronómetro y la información
 
 ---
 
-## Cómo correr el experimento
+## Historial
 
-### Antes de la sesión
-
-1. Listar a todos los participantes con `seniority × área`.
-2. Asignar al azar dentro de cada estrato: mitad a A, mitad a B.
-3. Formar equipos de 3–4 personas **dentro del mismo brazo** (no mezclar).
-4. Preparar dos salas separadas.
-5. Documentar la asignación en una tabla (`equipo_id, brazo, participantes, facilitador`).
-
-### Durante la sesión (45 min)
-
-| Tiempo | Qué pasa |
-|---|---|
-| 0–5 min | Brief inicial + presentación del caso. Cada equipo **abre el Sobre 1** (click sobre el sobre cerrado) |
-| 5–25 min | Trabajo en modo libre. El equipo decide cuándo **abrir el Sobre 2**. Puede pedir el Sobre 3 (cuesta 2 min) |
-| 25–40 min | Construcción del árbol + redacción de las 3 recomendaciones |
-| 40–45 min | **Usan los prompts sugeridos en la sección Árbol** para construir la presentación final al CFO con Claude. Exportar JSON y entregar |
-
-**Sobres cerrados**: cada sobre aparece cerrado en pantalla. El equipo lo abre haciendo click cuando decide consultarlo. El sistema registra automáticamente el timestamp de cada apertura en `localStorage` bajo la key `novamed_sobre_log`. Esto le da al facilitador datos objetivos para Y2 (gestión de información).
-
-**Uso del LLM**: todos los equipos usan **Claude** (claude.ai). Controla la variable "modelo de IA". En la sección Árbol hay **4 prompts sugeridos** que el equipo puede copiar al portapapeles para usar con Claude:
-1. Pulir el árbol (Claude critica la estructura)
-2. Afinar las recomendaciones (action + owner + plazo)
-3. Producir la presentación de 1 página al CFO
-4. Anticipar la objeción del CFO (Claude juega de Roberto Hein)
-
-Registrar como variable secundaria: cuántas veces usaron Claude, en qué momento, y con qué prompts (custom o de los sugeridos). Sirve para descartar que un brazo haya usado el LLM mucho más que el otro.
-
-### Después de la sesión
-
-1. Recolectar todos los JSONs.
-2. Anonimizarlos (quitar `brazo` antes de mandar a evaluadores).
-3. Dos evaluadores independientes puntúan Y1 e Y3 con la rúbrica.
-4. Calcular acuerdo entre evaluadores (Cohen's kappa ≥ 0.6).
-5. Comparar brazos con Mann-Whitney U por outcome. Reportar mediana + IC 95% + effect size.
-6. Evaluar la hipótesis cruzada: ¿A gana en Y1, B gana en Y3?
-
----
-
-## Formato del JSON exportado
-
-```json
-{
-  "meta": {
-    "experimento": "NovaMed v1",
-    "brazo": "A",
-    "timestamp": "2026-06-01T18:00:00Z",
-    "n_nodos": 7,
-    "n_conexiones": 6
-  },
-  "columnas": ["Proceso", "Personas", "Tecnología", "Gobernanza"],
-  "niveles": ["Efecto observado", "Problema central", "Causa raíz", "Causa subyacente"],
-  "nodos": [
-    {
-      "id": "n_abc123",
-      "texto": "El sistema no resuelve el problema operativo principal",
-      "nivel": "efecto",
-      "columna": "proceso",
-      "explicado_por": ["n_def456"]
-    }
-  ],
-  "recomendaciones": [
-    { "plazo": "inmediato (esta semana)", "texto": "..." },
-    { "plazo": "corto (2 semanas)", "texto": "..." },
-    { "plazo": "estructural", "texto": "..." }
-  ]
-}
-```
-
----
-
-## Sobre la estética
-
-- **Tipografía:** Fraunces (serif moderna con itálicas expresivas) para títulos, DM Sans para body, JetBrains Mono para datos y marcadores.
-- **Paleta:** papel (#F4F1EA) + tinta (#1A1815) + acento violeta profundo (#5B2C8F). Los brazos tienen color secundario: violeta oscuro (#3D2B6F) para A, violeta-rosa (#8B3A8F) para B.
-- **Marcadores numerados** tipo libro ("— 01", "— Paso 01") como separadores editoriales.
-- **Itálicas en palabras clave** de los títulos como acento poético.
-- **Cards minimal**, sin sombras, sin gradientes, sin dramatismo.
-
----
-
-## Limitaciones
-
-- N pequeño (15-20 equipos por brazo) detecta solo efectos medianos o grandes.
-- Sin grupo "sin training": no se puede afirmar que el training en general funciona.
-- Sin medición de seguimiento: no sabemos si el efecto se sostiene.
-- Validez externa limitada: replicar con un caso distinto fortalecería la generalización.
-
-
----
-
-## Notas técnicas
-
-### Activar modo facilitador
-
-- Por URL: `https://tu-sitio.github.io/?modo=facilitador`
-- Por atajo: `Ctrl + Shift + F` (alterna entre modos)
-- Se guarda en `localStorage`, así que no hace falta repetir cada vez
-
-### Preasignar el brazo (para participantes)
-
-El facilitador puede compartir links con el brazo ya asignado para que el participante no tenga que hacer la asignación aleatoria local. Si querés implementar esto, basta con leer `?brazo=A` o `?brazo=B` en el JS y llamar `setBrazo()` automáticamente. (No está implementado todavía en esta versión — los participantes hacen click en "Asignarme aleatoriamente" o el facilitador les indica su brazo verbalmente).
-
-### El árbol de problema
-
-Visualización jerárquica con SVG: nodos posicionados en 4 filas (Efecto / Problema central / Causa raíz / Causa subyacente) y conectados por curvas bezier. El layout se recalcula automáticamente al agregar/quitar nodos.
-
-Cada nodo tiene:
-- Texto del nodo
-- Nivel (efecto/problema/causa1/causa2)
-- Columna (proceso/personas/tecnología/gobernanza) — categoría temática
-- Conexiones a causas del nivel inferior
-
-### Sobres cerrados
-
-Cada sobre aparece visualmente como un sobre cerrado (con pliegue triangular en la esquina). Al hacer click se abre con animación. El **timestamp de cada apertura se guarda en `localStorage`** bajo `novamed_sobre_log`, lo que da datos objetivos al facilitador para evaluar Y2 (gestión de información) sin depender de la observación manual.
-
-### Prompts para Claude
-
-En la sección Árbol hay 4 prompts copiables al portapapeles, para que los equipos los usen con Claude (claude.ai) en la fase final de construcción de la presentación al CFO. Esto controla la variable "modelo de IA" en el experimento — todos usan el mismo modelo.
+Versiones anteriores tenían un experimento causal cuanti vs cuali. **Esa parte fue descartada.** El training de soft skills es ahora el core. Si querés reincorporar medición experimental, los datos del `localStorage` te dan una base.
