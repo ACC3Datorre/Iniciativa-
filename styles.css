@@ -19,18 +19,18 @@
   --muted-soft: #A89F95;
 
   /* Acento único: borgoña sobrio */
-  --accent: #6B2D2D;
-  --accent-soft: rgba(107, 45, 45, 0.08);
-  --accent-border: rgba(107, 45, 45, 0.22);
-  --accent-text: #8A3D3D;
+  --accent: #5B2C8F;
+  --accent-soft: rgba(91, 44, 143, 0.08);
+  --accent-border: rgba(91, 44, 143, 0.22);
+  --accent-text: #7240A8;
 
   /* Diferenciación de brazos (sutil, no protagónico) */
-  --brazo-A: #2C5545;       /* verde botella, brazo cuanti */
-  --brazo-A-soft: rgba(44, 85, 69, 0.07);
-  --brazo-A-border: rgba(44, 85, 69, 0.2);
-  --brazo-B: #6B2D2D;       /* borgoña, brazo cuali — coincide con acento */
-  --brazo-B-soft: rgba(107, 45, 45, 0.07);
-  --brazo-B-border: rgba(107, 45, 45, 0.2);
+  --brazo-A: #3D2B6F;       /* verde botella, brazo cuanti */
+  --brazo-A-soft: rgba(61, 43, 111, 0.08);
+  --brazo-A-border: rgba(61, 43, 111, 0.22);
+  --brazo-B: #5B2C8F;       /* borgoña, brazo cuali — coincide con acento */
+  --brazo-B-soft: rgba(139, 58, 143, 0.08);
+  --brazo-B-border: rgba(139, 58, 143, 0.22);
 
   /* Para "señales": positivo, alerta, advertencia */
   --warn: #8B6914;
@@ -1043,4 +1043,443 @@ body[data-brazo="facilitador"] .brazo-only-B { display: block; }
   .title { font-size: 26px; }
   .hypothesis { padding: 1.5rem; }
   .hypothesis-text { font-size: 18px; }
+}
+
+/* ============================================================
+   SOBRES CERRADOS — interactividad
+   ============================================================ */
+.sobre {
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Estado CERRADO: solo se ve el header + un teaser */
+.sobre.closed .sobre-content {
+  display: none;
+}
+.sobre.closed {
+  padding: 1.5rem 2rem;
+  background: var(--surface-warm);
+  background-image:
+    linear-gradient(135deg, transparent 49.5%, var(--border) 50%, transparent 50.5%),
+    linear-gradient(45deg, transparent 49.5%, var(--border) 50%, transparent 50.5%);
+  background-size: 32px 32px;
+  background-position: top right, top right;
+  background-repeat: no-repeat;
+  background-color: var(--surface-warm);
+  position: relative;
+}
+.sobre.closed::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 48px;
+  height: 48px;
+  background:
+    linear-gradient(135deg, transparent 0%, transparent 48%, var(--accent-border) 49%, var(--accent-border) 51%, transparent 52%, transparent 100%),
+    linear-gradient(45deg,  transparent 0%, transparent 48%, var(--accent-border) 49%, var(--accent-border) 51%, transparent 52%, transparent 100%);
+  pointer-events: none;
+  opacity: 0.6;
+}
+.sobre.closed:hover {
+  background-color: var(--paper);
+  border-color: var(--accent-border);
+  transform: translateY(-1px);
+}
+.sobre.closed:hover .sobre-cta {
+  color: var(--accent);
+}
+
+.sobre-cta {
+  display: none;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 8px;
+  transition: color 0.2s;
+}
+.sobre.closed .sobre-cta {
+  display: block;
+}
+.sobre-cta .arrow {
+  font-family: var(--serif);
+  font-style: italic;
+  margin-left: 4px;
+  color: var(--accent);
+}
+
+.sobre-locked-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 19px;
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: -0.01em;
+}
+.sobre.closed .sobre-content + .sobre-title,
+.sobre:not(.closed) .sobre-locked-title {
+  display: none;
+}
+
+/* Estado ABIERTO: contenido visible con animación suave */
+.sobre:not(.closed) {
+  animation: openSobre 0.4s ease;
+}
+@keyframes openSobre {
+  from { opacity: 0.5; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sobre-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  transition: all 0.15s;
+}
+.sobre.closed .sobre-close-btn { display: none; }
+.sobre-close-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ============================================================
+   PROMPTS SUGERIDOS — bloque de ayuda para usar Claude
+   ============================================================ */
+.prompts-block {
+  background: var(--paper);
+  border: 1px solid var(--accent-border);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  padding: 1.75rem 2rem;
+  margin: 1.5rem 0;
+}
+.prompts-intro {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+.prompts-intro em { font-style: italic; color: var(--accent); }
+.prompt-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.prompt-card:last-child { margin-bottom: 0; }
+.prompt-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  display: block;
+}
+.prompt-text {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  background: var(--surface-warm);
+  padding: 10px 14px;
+  border-radius: 2px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  border-left: 2px solid var(--accent-border);
+  margin-top: 6px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.prompt-copy {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  color: var(--muted);
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.15s;
+}
+.prompt-copy:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.prompt-copy.copied {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+}
+
+/* ============================================================
+   MODO PARTICIPANTE vs FACILITADOR
+   Por default body tiene data-modo="participante".
+   Solo ?modo=facilitador (o botón oculto) cambia a facilitador.
+   ============================================================ */
+
+/* Ocultar secciones de experimento para participantes */
+body[data-modo="participante"] #tab-diseno,
+body[data-modo="participante"] #tab-asignacion,
+body[data-modo="participante"] #tab-evaluacion,
+body[data-modo="participante"] #brazo-badge,
+body[data-modo="participante"] .facilitator-note,
+body[data-modo="participante"] .only-facilitador {
+  display: none !important;
+}
+
+/* Para participantes: mostrar título neutro en lugar del badge de brazo */
+body[data-modo="participante"] .nav-tab #brazo-badge { display: none; }
+
+/* Cuando es participante y el sitio arranca en una sección oculta, redirigir a "caso" */
+body[data-modo="participante"] #diseno,
+body[data-modo="participante"] #asignacion,
+body[data-modo="participante"] #evaluacion {
+  display: none !important;
+}
+
+/* Mostrar info SOLO al facilitador */
+.only-facilitador { display: none; }
+body[data-modo="facilitador"] .only-facilitador { display: block; }
+
+/* Indicador de modo facilitador (sutil, en la nav) */
+.modo-indicator {
+  display: none;
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  margin-left: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--warn-soft);
+  color: var(--warn);
+  border: 1px solid var(--warn-border);
+}
+body[data-modo="facilitador"] .modo-indicator { display: inline-block; }
+
+/* ============================================================
+   ÁRBOL VISUAL — forma jerárquica con SVG para líneas
+   ============================================================ */
+.tree-canvas {
+  position: relative;
+  width: 100%;
+  min-height: 480px;
+  padding: 20px 10px;
+  background: var(--paper);
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+  overflow-y: visible;
+}
+.tree-canvas-inner {
+  position: relative;
+  min-width: 720px;
+  min-height: 440px;
+}
+
+.tree-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tree-svg path,
+.tree-svg line {
+  stroke: var(--border-strong);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.tree-node-visual {
+  position: absolute;
+  width: 180px;
+  min-height: 64px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid;
+  background: var(--surface);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+}
+.tree-node-visual:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(91, 44, 143, 0.12);
+}
+.tree-node-visual.efecto {
+  border-color: var(--accent-border);
+  background: var(--paper);
+  border-left: 3px solid var(--accent);
+}
+.tree-node-visual.efecto .tn-label { color: var(--accent); }
+.tree-node-visual.problema {
+  border-color: var(--border-strong);
+  background: var(--surface);
+  border-left: 3px solid var(--ink);
+}
+.tree-node-visual.problema .tn-label { color: var(--ink); }
+.tree-node-visual.causa1 {
+  border-color: var(--warn-border);
+  background: var(--paper);
+  border-left: 3px solid var(--warn);
+}
+.tree-node-visual.causa1 .tn-label { color: var(--warn); }
+.tree-node-visual.causa2 {
+  border-color: var(--brazo-A-border);
+  background: var(--paper);
+  border-left: 3px solid var(--brazo-A);
+}
+.tree-node-visual.causa2 .tn-label { color: var(--brazo-A); }
+
+.tn-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.tn-text {
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--ink);
+  font-family: var(--sans);
+  /* Truncar visualmente si es muy largo */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tn-column-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-top: 5px;
+  opacity: 0.7;
+}
+
+/* Empty state del árbol */
+.tree-empty {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 400px;
+}
+.tree-empty p { margin-bottom: 4px; }
+
+/* Nivel labels a la izquierda del canvas */
+.tree-levels {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 110px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  z-index: 0;
+}
+.tree-level-tag {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--muted);
+  padding-right: 14px;
+  border-right: 1px solid var(--border);
+  letter-spacing: -0.005em;
+}
+.tree-level-tag.efecto { color: var(--accent); }
+.tree-level-tag.problema { color: var(--ink); }
+.tree-level-tag.causa1 { color: var(--warn); }
+.tree-level-tag.causa2 { color: var(--brazo-A); }
+
+.tree-content-area {
+  position: relative;
+  margin-left: 130px;
+  min-height: 440px;
+}
+
+/* Botones flotantes de agregar nodo por nivel */
+.tree-add-floating {
+  position: absolute;
+  border: 1px dashed var(--border-strong);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  color: var(--muted);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1;
+  z-index: 3;
+  transition: all 0.15s;
+}
+.tree-add-floating:hover {
+  border-color: var(--accent);
+  border-style: solid;
+  color: var(--accent);
+  background: var(--accent-soft);
+  transform: scale(1.1);
+}
+
+/* Mobile: árbol más compacto */
+@media (max-width: 760px) {
+  .tree-canvas { padding: 10px 5px; }
+  .tree-node-visual { width: 130px; font-size: 11px; padding: 8px 9px; }
+  .tn-text { font-size: 11px; }
+  .tree-levels { width: 80px; }
+  .tree-content-area { margin-left: 90px; }
+  .tree-level-tag { font-size: 11px; padding-right: 10px; }
 }
