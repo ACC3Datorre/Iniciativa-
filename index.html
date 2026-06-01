@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NovaMed · Experimento Cuanti vs. Cuali</title>
-<meta name="description" content="Experimento causal de dos brazos sobre el caso NovaMed. Mismo caso, distinta evidencia.">
+<title>NovaMed · Caso de Problem Solving</title>
+<meta name="description" content="Caso de problem solving: el sistema que funciona bien.">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body data-brazo="none">
+<body data-brazo="none" data-modo="participante">
 
 <nav>
   <div class="nav-logo">
-    <span class="chev">&gt;</span> NovaMed <em style="font-family:var(--serif); font-style:italic; color:var(--accent);">Experimento</em>
-    <span class="meta">FY26 · Problem Solving</span>
+    <span class="chev">&gt;</span> NovaMed
+    <span class="meta">Caso · Problem Solving</span>
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showSection('diseno')" id="tab-diseno">
@@ -35,6 +35,7 @@
       <span class="num">06</span> Evaluación
     </button>
     <span class="brazo-badge none" id="brazo-badge">SIN ASIGNAR</span>
+    <span class="modo-indicator">Facilitador</span>
   </div>
 </nav>
 
@@ -140,6 +141,7 @@
         <p><strong>Mismo facilitador</strong> rotando, o varios entrenados con el mismo guion.</p>
         <p><strong>Mismo LLM</strong>: Claude (claude.ai). Elimina la variabilidad por modelo de IA.</p>
         <p><strong>Mismos equipos de 3–4 personas</strong>, formados por asignación aleatoria estratificada.</p>
+      </div>
       </div>
     </div>
   </div>
@@ -339,6 +341,7 @@
         <span class="tag warn">oferta activa</span>
         <span class="tag">módulo adicional disponible</span>
       </div>
+      </div>
     </div>
   </div>
 
@@ -411,12 +414,20 @@
   <div class="brazo-only-A">
     <div class="banner accent">
       <span class="banner-icon">A</span>
-      <div><strong>Brazo A · Cuantitativo.</strong> Vas a recibir evidencia principalmente <em>numérica</em>: tablas, ratios, métricas de uso, distribuciones, costos.</div>
+      <div>
+        <span class="only-facilitador"><strong>Brazo A · Cuantitativo.</strong> </span>
+        Tu material para este caso: información en <em>tablas y métricas</em>. Vas a tener tres sobres, cada uno con un tipo de evidencia distinta.
+      </div>
     </div>
 
-    <div class="sobre s1">
+    <div class="sobre s1 closed" id="sobre-sobre-1a" onclick="toggleSobre(this, event)">
+      <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
       <div class="sobre-label">Sobre 1A · se entrega al inicio</div>
-      <div class="sobre-title">Datos operacionales y de <em>uso</em></div>
+      <div class="sobre-locked-title">Métricas y tablas del sistema</div>
+      <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
+      <div class="sobre-content">
+        <div class="sobre-title">Datos operacionales y de <em>uso</em></div>
+        
       <p class="card-sub" style="margin-bottom:18px;">Reporte automático del sistema y métricas del call center, 90 días post-lanzamiento.</p>
 
       <span class="editorial-marker"><span class="dash">—</span>Métricas técnicas del sistema (fuente: IT)</span>
@@ -446,10 +457,17 @@
         <strong>Para el facilitador:</strong> Dar 3 minutos para que el equipo lea la tabla, marque inconsistencias y formule una hipótesis cuantitativa del problema central. No responder preguntas todavía.
       </div>
     </div>
+      </div>
+    </div>
 
-    <div class="sobre s2">
+    <div class="sobre s2 closed" id="sobre-sobre-2a" onclick="toggleSobre(this, event)">
+      <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
       <div class="sobre-label">Sobre 2A · el equipo decide cuándo abrirlo</div>
-      <div class="sobre-title">Distribución de turnos y <em>adopción</em></div>
+      <div class="sobre-locked-title">Distribución detallada a 90 días</div>
+      <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
+      <div class="sobre-content">
+        <div class="sobre-title">Distribución de turnos y <em>adopción</em></div>
+        
       <p class="card-sub" style="margin-bottom:18px;">Análisis detallado de los 90 días post-lanzamiento. Generado por Ops a pedido del CFO.</p>
 
       <span class="editorial-marker"><span class="dash">—</span>Distribución de tipos de turno (n = 27.840 turnos, 90 días)</span>
@@ -485,10 +503,17 @@
         <strong>Para el facilitador:</strong> Observar cuándo el equipo abre este sobre. Equipos cuanti suelen abrirlo rápido. El dato del 60% es el más reencuadrante.
       </div>
     </div>
+      </div>
+    </div>
 
-    <div class="sobre s3">
+    <div class="sobre s3 closed" id="sobre-sobre-3a" onclick="toggleSobre(this, event)">
+      <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
       <div class="sobre-label">Sobre 3A · solo si el equipo lo pide (cuesta 2 min)</div>
-      <div class="sobre-title">Análisis del <em>contrato</em> vigente</div>
+      <div class="sobre-locked-title">Análisis del contrato (datos)</div>
+      <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
+      <div class="sobre-content">
+        <div class="sobre-title">Análisis del <em>contrato</em> vigente</div>
+        
       <p class="card-sub" style="margin-bottom:18px;">Revisión legal y económica del contrato firmado con TurnoFácil hace 6 meses.</p>
 
       <table class="data-table">
@@ -506,6 +531,7 @@
       <div class="facilitator-note">
         <strong>Para el facilitador:</strong> Este dato reencuadra el problema económico. En el brazo cuanti, suelen llegar acá con un cálculo costo-beneficio ya iniciado.
       </div>
+      </div>
     </div>
   </div>
 
@@ -514,12 +540,22 @@
   <div class="brazo-only-B">
     <div class="banner accent">
       <span class="banner-icon">B</span>
-      <div><strong>Brazo B · Cualitativo.</strong> Vas a recibir evidencia principalmente <em>narrativa</em>: citas literales, observaciones de campo, entrevistas, historias internas del proyecto.</div>
+      <div>
+        <span class="only-facilitador"><strong>Brazo B · Cualitativo.</strong> </span>
+        Tu material para este caso: información en <em>entrevistas y testimonios</em>. Vas a tener tres sobres, cada uno con un tipo de evidencia distinta.
+      </div>
+    </div>
+      </div>
     </div>
 
-    <div class="sobre s1">
+    <div class="sobre s1 closed" id="sobre-sobre-1b" onclick="toggleSobre(this, event)">
+      <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
       <div class="sobre-label">Sobre 1B · se entrega al inicio</div>
-      <div class="sobre-title">Voces <em>enfrentadas</em></div>
+      <div class="sobre-locked-title">Entrevistas a IT y Operaciones</div>
+      <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
+      <div class="sobre-content">
+        <div class="sobre-title">Voces <em>enfrentadas</em></div>
+        
       <p class="card-sub" style="margin-bottom:18px;">Dos entrevistas internas hechas por RRHH la semana pasada, a pedido del CFO. Se transcribieron literalmente.</p>
 
       <div class="card">
@@ -557,10 +593,17 @@
         <strong>Para el facilitador:</strong> Dar 3 minutos para que el equipo lea las dos entrevistas y mapee dónde está el desacuerdo. No responder preguntas todavía.
       </div>
     </div>
+      </div>
+    </div>
 
-    <div class="sobre s2">
+    <div class="sobre s2 closed" id="sobre-sobre-2b" onclick="toggleSobre(this, event)">
+      <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
       <div class="sobre-label">Sobre 2B · el equipo decide cuándo abrirlo</div>
-      <div class="sobre-title">Voces del <em>piso clínico</em></div>
+      <div class="sobre-locked-title">Voces del piso clínico</div>
+      <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
+      <div class="sobre-content">
+        <div class="sobre-title">Voces del <em>piso clínico</em></div>
+        
       <p class="card-sub" style="margin-bottom:18px;">Observaciones de campo y entrevistas con médicos y enfermeros del turno mañana de dos clínicas, hechas por una consultora externa hace dos semanas.</p>
 
       <div class="quote">
@@ -592,10 +635,17 @@
         <strong>Para el facilitador:</strong> Observar cuándo el equipo abre este sobre. Equipos cuali suelen abrirlo después de discutir las dos versiones del Sobre 1B. Las voces del piso reencuadran el problema con un peso narrativo fuerte.
       </div>
     </div>
+      </div>
+    </div>
 
-    <div class="sobre s3">
+    <div class="sobre s3 closed" id="sobre-sobre-3b" onclick="toggleSobre(this, event)">
+      <button class="sobre-close-btn" onclick="closeSobre(event, this)" title="Cerrar">×</button>
       <div class="sobre-label">Sobre 3B · solo si el equipo lo pide (cuesta 2 min)</div>
-      <div class="sobre-title">La historia del <em>contrato</em></div>
+      <div class="sobre-locked-title">La historia del contrato</div>
+      <div class="sobre-cta">click para abrir <span class="arrow">→</span></div>
+      <div class="sobre-content">
+        <div class="sobre-title">La historia del <em>contrato</em></div>
+        
       <p class="card-sub" style="margin-bottom:18px;">Entrevista a Lucía Méndez, abogada interna de la empresa, que firmó el contrato con TurnoFácil hace 6 meses.</p>
 
       <div class="quote">
@@ -616,10 +666,13 @@
       <div class="facilitator-note">
         <strong>Para el facilitador:</strong> Este dato reencuadra el problema como uno de proceso. En el brazo cuali, los equipos suelen llegar acá con una hipótesis sobre la fragmentación de roles.
       </div>
+      </div>
     </div>
   </div>
+      </div>
+    </div>
 
-  <hr class="divider">
+    <hr class="divider">
   <div class="banner info">
     <span class="banner-icon">→</span>
     <div>Una vez que el equipo procesó los sobres, avanzá a la sección <strong>Árbol</strong> para construir el entregable.</div>
@@ -650,11 +703,23 @@
       <div class="tree-status" id="tree-status">0 nodos · 0 conexiones</div>
     </div>
 
-    <div id="tree-grid-container"></div>
+    <div class="tree-canvas" id="tree-canvas">
+      <div class="tree-canvas-inner" id="tree-canvas-inner">
+        <div class="tree-levels">
+          <div class="tree-level-tag efecto">Efecto</div>
+          <div class="tree-level-tag problema">Problema central</div>
+          <div class="tree-level-tag causa1">Causa raíz</div>
+          <div class="tree-level-tag causa2">Causa subyacente</div>
+        </div>
+        <div class="tree-content-area" id="tree-content-area">
+          <!-- SVG y nodos generados por JS -->
+        </div>
+      </div>
+    </div>
 
     <div class="banner info" style="margin-top:18px;">
       <span class="banner-icon">i</span>
-      <div><strong>Cómo construir el árbol:</strong> Click en una celda para agregar un nodo. Click en un nodo existente para editarlo o conectarlo. Las conexiones van <em>hacia abajo</em>: cada nodo se explica por sus causas del nivel inferior.</div>
+      <div><strong>Cómo construir el árbol:</strong> Usá los botones de arriba para agregar nodos en cada nivel. Click en un nodo para editarlo o conectarlo. Las flechas conectan <em>causa → efecto</em>: cada problema se explica por sus causas del nivel inferior.</div>
     </div>
   </div>
 
@@ -669,7 +734,70 @@
     </div>
   </div>
 
-  <div class="facilitator-note">
+  <span class="editorial-marker"><span class="dash">—</span>Usá Claude para construir la presentación final al CFO</span>
+
+  <div class="prompts-block">
+    <div class="prompts-intro">
+      Cuando tengas el árbol y las tres recomendaciones, <em>copiá los prompts</em> de abajo en <strong>claude.ai</strong> para que Claude te ayude a producir el entregable final. <em>Importante:</em> todos los equipos deben usar <strong>el mismo LLM</strong> — eso controla la variable IA en el experimento.
+    </div>
+
+    <div class="prompt-card">
+      <button class="prompt-copy" onclick="copyPrompt(this)">copiar</button>
+      <span class="prompt-label">Prompt 1 · Pulir el árbol</span>
+      <div class="prompt-text">Soy un equipo de problem solving trabajando un caso. Te paso mi árbol de problema en JSON.
+
+Necesito que: (1) revises si la causa raíz que identifiqué realmente explica el problema central, (2) detectes si confundí causas con síntomas, (3) me sugieras dónde el árbol está flojo. Sé crítico, no condescendiente.
+
+Mi árbol:
+[PEGAR ACÁ EL JSON EXPORTADO]</div>
+    </div>
+
+    <div class="prompt-card">
+      <button class="prompt-copy" onclick="copyPrompt(this)">copiar</button>
+      <span class="prompt-label">Prompt 2 · Afinar las recomendaciones</span>
+      <div class="prompt-text">Estas son las tres recomendaciones que quiero darle al CFO. Necesito que las revises bajo este criterio: ¿podría el CFO leerlas en 30 segundos y saber qué hacer el viernes? Cada una debe tener acción concreta + owner + plazo.
+
+Si alguna es vaga o le falta algo, reescribila.
+
+Recomendación 1: [PEGAR]
+Recomendación 2: [PEGAR]
+Recomendación 3: [PEGAR]</div>
+    </div>
+
+    <div class="prompt-card">
+      <button class="prompt-copy" onclick="copyPrompt(this)">copiar</button>
+      <span class="prompt-label">Prompt 3 · Producir la presentación de 1 página</span>
+      <div class="prompt-text">Necesito un documento de 1 página dirigido al CFO de NovaMed (Roberto Hein, recién llegado, sin contexto previo del proyecto, con presión de tiempo para decidir el viernes).
+
+Tiene que tener:
+- Una conclusión arriba (qué hacer el viernes), en 1 frase.
+- Un árbol simple de tres niveles (efecto → problema → causa raíz).
+- Las 3 recomendaciones (esta semana / 2 semanas / estructural), cada una con owner y plazo.
+
+Tono: directo, sin jerga consultora, sin hedge language ("podría", "quizás", "se sugiere"). Verbo activo.
+
+Mi diagnóstico:
+[PEGAR EL JSON DEL ÁRBOL + LAS RECOMENDACIONES]</div>
+    </div>
+
+    <div class="prompt-card">
+      <button class="prompt-copy" onclick="copyPrompt(this)">copiar</button>
+      <span class="prompt-label">Prompt 4 · Anticipar la objeción del CFO</span>
+      <div class="prompt-text">Hacé de cuenta que sos el CFO Roberto Hein leyendo esta presentación. Tenés 2 meses en la empresa, no conocés el historial. Tu trabajo es decidir el viernes si renovar el contrato.
+
+Decime: (1) las 3 preguntas más incómodas que harías al leer esto, (2) qué falta para que la decisión sea obvia, (3) qué parte no creés del todo.
+
+La presentación:
+[PEGAR LA PRESENTACIÓN DEL PROMPT 3]</div>
+    </div>
+  </div>
+
+  <div class="banner warn" style="margin-top:18px;">
+    <span class="banner-icon">!</span>
+    <div><strong>Control del experimento:</strong> registrá cuántas veces usaron Claude, en qué momento, y qué tipo de prompts. Esto se mide como variable secundaria para descartar que un brazo haya usado el LLM mucho más que el otro.</div>
+  </div>
+
+    <div class="facilitator-note">
     <strong>Para el facilitador:</strong> El JSON exportado contiene la estructura completa del árbol (nodos, conexiones, niveles, columnas) más las tres recomendaciones. Guardalo con un identificador del equipo y del brazo para el análisis posterior. Idealmente entregar a los evaluadores <em>sin la etiqueta del brazo</em>, para evaluación ciega.
   </div>
 </section>
@@ -787,6 +915,7 @@
         <p>Que el training en general "funciona" (no hay grupo sin training).</p>
         <p>Que el efecto se sostiene en el tiempo (no hay medición posterior).</p>
         <p>Que se transfiere a otros casos (sería válido replicar con un caso distinto).</p>
+      </div>
       </div>
     </div>
   </div>
