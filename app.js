@@ -375,5 +375,45 @@ function clearTree() {
   loadState();
 }
 
+
+// ============ SOBRES (cerrar/abrir) ============
+function toggleSobre(elem, event) {
+  // Si está cerrado, abrir. Si está abierto, no hacer nada al click en el body.
+  if (elem.classList.contains('closed')) {
+    elem.classList.remove('closed');
+    // Registrar evento para análisis posterior (si el facilitador quiere ver timing)
+    const sobreId = elem.id || 'unknown';
+    const ts = new Date().toISOString();
+    try {
+      const log = JSON.parse(localStorage.getItem('novamed_sobre_log') || '[]');
+      log.push({ sobre: sobreId, abierto_en: ts, brazo: state.brazo });
+      localStorage.setItem('novamed_sobre_log', JSON.stringify(log));
+    } catch(e) { /* silenciar */ }
+  }
+}
+
+function closeSobre(event, btn) {
+  event.stopPropagation();
+  const sobre = btn.closest('.sobre');
+  if (sobre) sobre.classList.add('closed');
+}
+
+// ============ COPIAR PROMPT AL PORTAPAPELES ============
+function copyPrompt(btn) {
+  const card = btn.closest('.prompt-card');
+  const text = card.querySelector('.prompt-text').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const originalText = btn.textContent;
+    btn.textContent = '✓ copiado';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.classList.remove('copied');
+    }, 1500);
+  }).catch(err => {
+    alert('No se pudo copiar. Seleccioná el texto manualmente.');
+  });
+}
+
 // ============ INICIALIZACIÓN ============
 loadState();
